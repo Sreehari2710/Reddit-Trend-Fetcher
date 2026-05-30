@@ -1,0 +1,1649 @@
+{
+  "kind": "Listing",
+  "data": {
+    "after": "t3_1tctvan",
+    "dist": 5,
+    "modhash": "1moiyym0js65f3b1a10020962e3a7a8aa15e85d66f4b00aa0b",
+    "geo_filter": "",
+    "children": [
+      {
+        "kind": "t3",
+        "data": {
+          "approved_at_utc": null,
+          "subreddit": "IndianHaircare",
+          "selftext": "",
+          "author_fullname": "t2_i84y0n8q",
+          "saved": false,
+          "mod_reason_title": null,
+          "gilded": 0,
+          "clicked": false,
+          "title": "M26: Hair follicles",
+          "link_flair_richtext": [
+            {
+              "e": "text",
+              "t": "Memes "
+            }
+          ],
+          "subreddit_name_prefixed": "r/IndianHaircare",
+          "hidden": false,
+          "pwls": 6,
+          "link_flair_css_class": "",
+          "downs": 0,
+          "thumbnail_height": 140,
+          "top_awarded_type": null,
+          "hide_score": false,
+          "name": "t3_1tl35au",
+          "quarantine": false,
+          "link_flair_text_color": "dark",
+          "upvote_ratio": 1,
+          "author_flair_background_color": null,
+          "ups": 2805,
+          "total_awards_received": 0,
+          "media_embed": {
+
+          },
+          "thumbnail_width": 140,
+          "author_flair_template_id": null,
+          "is_original_content": false,
+          "user_reports": [],
+          "secure_media": null,
+          "is_reddit_media_domain": true,
+          "is_meta": false,
+          "category": null,
+          "secure_media_embed": {
+
+          },
+          "link_flair_text": "Memes ",
+          "can_mod_post": false,
+          "score": 2805,
+          "approved_by": null,
+          "is_created_from_ads_ui": false,
+          "author_premium": false,
+          "thumbnail": "https://preview.redd.it/zac0mrp3ps2h1.jpeg?width=140&amp;height=140&amp;crop=1:1,smart&amp;auto=webp&amp;s=cf7f31bf2b0eb026b2551f972e63526ec4dfcc69",
+          "edited": false,
+          "author_flair_css_class": null,
+          "author_flair_richtext": [],
+          "gildings": {
+
+          },
+          "post_hint": "image",
+          "content_categories": null,
+          "is_self": false,
+          "subreddit_type": "public",
+          "created": 1779502012,
+          "link_flair_type": "richtext",
+          "wls": 6,
+          "removed_by_category": null,
+          "banned_by": null,
+          "author_flair_type": "text",
+          "domain": "i.redd.it",
+          "allow_live_comments": false,
+          "selftext_html": null,
+          "likes": null,
+          "suggested_sort": null,
+          "banned_at_utc": null,
+          "url_overridden_by_dest": "https://i.redd.it/zac0mrp3ps2h1.jpeg",
+          "view_count": null,
+          "archived": false,
+          "no_follow": false,
+          "is_crosspostable": true,
+          "pinned": false,
+          "over_18": false,
+          "preview": {
+            "images": [
+              {
+                "source": {
+                  "url": "https://preview.redd.it/zac0mrp3ps2h1.jpeg?auto=webp&amp;s=355da9ba399b943bbbaa86f22f012f7c7314d6ec",
+                  "width": 736,
+                  "height": 779
+                },
+                "resolutions": [
+                  {
+                    "url": "https://preview.redd.it/zac0mrp3ps2h1.jpeg?width=108&amp;crop=smart&amp;auto=webp&amp;s=fa868d6545c928b67c41d6be282b047a5520200d",
+                    "width": 108,
+                    "height": 114
+                  },
+                  {
+                    "url": "https://preview.redd.it/zac0mrp3ps2h1.jpeg?width=216&amp;crop=smart&amp;auto=webp&amp;s=fdaafcbd17c9ca7720710fa7a2438fcabc80d3a4",
+                    "width": 216,
+                    "height": 228
+                  },
+                  {
+                    "url": "https://preview.redd.it/zac0mrp3ps2h1.jpeg?width=320&amp;crop=smart&amp;auto=webp&amp;s=6cd6b744d1f024eb1253dc485de297f9c09494ce",
+                    "width": 320,
+                    "height": 338
+                  },
+                  {
+                    "url": "https://preview.redd.it/zac0mrp3ps2h1.jpeg?width=640&amp;crop=smart&amp;auto=webp&amp;s=12b474de71193e05eba85769c7f80f31d1cb5e99",
+                    "width": 640,
+                    "height": 677
+                  }
+                ],
+                "variants": {
+
+                },
+                "id": "zac0mrp3ps2h1"
+              }
+            ],
+            "enabled": true
+          },
+          "all_awardings": [],
+          "awarders": [],
+          "media_only": false,
+          "link_flair_template_id": "e205a380-98d3-11ef-90f5-a637be3b7b74",
+          "can_gild": false,
+          "spoiler": false,
+          "locked": false,
+          "author_flair_text": null,
+          "treatment_tags": [],
+          "visited": false,
+          "removed_by": null,
+          "mod_note": null,
+          "distinguished": null,
+          "subreddit_id": "t5_3bw9xf",
+          "author_is_blocked": false,
+          "mod_reason_by": null,
+          "num_reports": null,
+          "removal_reason": null,
+          "link_flair_background_color": "#ff8717",
+          "id": "1tl35au",
+          "is_robot_indexable": true,
+          "report_reasons": null,
+          "author": "Marvel_SPideRRMAN",
+          "discussion_type": null,
+          "num_comments": 33,
+          "send_replies": true,
+          "contest_mode": false,
+          "mod_reports": [],
+          "author_patreon_flair": false,
+          "author_flair_text_color": null,
+          "permalink": "/r/IndianHaircare/comments/1tl35au/m26_hair_follicles/",
+          "stickied": false,
+          "url": "https://i.redd.it/zac0mrp3ps2h1.jpeg",
+          "subreddit_subscribers": 154667,
+          "created_utc": 1779502012,
+          "num_crossposts": 0,
+          "media": null,
+          "is_video": false
+        }
+      },
+      {
+        "kind": "t3",
+        "data": {
+          "approved_at_utc": null,
+          "subreddit": "IndianHaircare",
+          "selftext": "Found a very old minox bottle going through dad's old stuff ,it's approx 25 yr old and cost 132 rupees \n\nUpdate :- Since a lot of people are asking: no, he’s not bald and he never got a transplant 😭\n\nHis hairline is slightly receded (probably around stage 2.5–3) with a bit lower density, but honestly his hair still looks pretty good for 56.\n\nApparently he stopped using Minoxidil back then because it was super expensive for him at the time and he wasn’t consistent with it.\n\nFunny enough, he started using it again after taking me to a dermatologist for my own hair loss treatment 💀\n",
+          "author_fullname": "t2_8byhpoqe",
+          "saved": false,
+          "mod_reason_title": null,
+          "gilded": 0,
+          "clicked": false,
+          "is_gallery": true,
+          "title": "POV: You Discover Your Dad Started the Battle Against Baldness Before You Were Born(M25)",
+          "link_flair_richtext": [
+            {
+              "e": "text",
+              "t": "Memes "
+            }
+          ],
+          "subreddit_name_prefixed": "r/IndianHaircare",
+          "hidden": false,
+          "pwls": 6,
+          "link_flair_css_class": "",
+          "downs": 0,
+          "thumbnail_height": 140,
+          "top_awarded_type": null,
+          "hide_score": false,
+          "media_metadata": {
+            "8xck9b75lqzg1": {
+              "status": "valid",
+              "e": "Image",
+              "m": "image/jpg",
+              "p": [
+                {
+                  "y": 144,
+                  "x": 108,
+                  "u": "https://preview.redd.it/8xck9b75lqzg1.jpg?width=108&amp;crop=smart&amp;auto=webp&amp;s=949df2e47d40dc57a4f49b7a9fd71dda4c2ca404"
+                },
+                {
+                  "y": 288,
+                  "x": 216,
+                  "u": "https://preview.redd.it/8xck9b75lqzg1.jpg?width=216&amp;crop=smart&amp;auto=webp&amp;s=e1c0df20e130298bf0166ede55e49108bb50247d"
+                },
+                {
+                  "y": 426,
+                  "x": 320,
+                  "u": "https://preview.redd.it/8xck9b75lqzg1.jpg?width=320&amp;crop=smart&amp;auto=webp&amp;s=742f8b52c76e45098c3e709c16b4b83edf08fa01"
+                },
+                {
+                  "y": 853,
+                  "x": 640,
+                  "u": "https://preview.redd.it/8xck9b75lqzg1.jpg?width=640&amp;crop=smart&amp;auto=webp&amp;s=d7d7a64057882ad2eaf9596a47d4ff1ebb689cb3"
+                },
+                {
+                  "y": 1280,
+                  "x": 960,
+                  "u": "https://preview.redd.it/8xck9b75lqzg1.jpg?width=960&amp;crop=smart&amp;auto=webp&amp;s=0d53b03bc70d8902f4cba2f5a87ce9eb30c55ca5"
+                },
+                {
+                  "y": 1440,
+                  "x": 1080,
+                  "u": "https://preview.redd.it/8xck9b75lqzg1.jpg?width=1080&amp;crop=smart&amp;auto=webp&amp;s=7f6860309cb89f3bc7ed8a8b21110caad4736e35"
+                }
+              ],
+              "s": {
+                "y": 4096,
+                "x": 3072,
+                "u": "https://preview.redd.it/8xck9b75lqzg1.jpg?width=3072&amp;format=pjpg&amp;auto=webp&amp;s=46313efc51e02b9a60aed73fb409f62d1f7db82b"
+              },
+              "id": "8xck9b75lqzg1"
+            },
+            "2cudh3i4lqzg1": {
+              "status": "valid",
+              "e": "Image",
+              "m": "image/jpg",
+              "p": [
+                {
+                  "y": 144,
+                  "x": 108,
+                  "u": "https://preview.redd.it/2cudh3i4lqzg1.jpg?width=108&amp;crop=smart&amp;auto=webp&amp;s=018b3e9136ccb6ebb376818c0668a18c32cf4002"
+                },
+                {
+                  "y": 288,
+                  "x": 216,
+                  "u": "https://preview.redd.it/2cudh3i4lqzg1.jpg?width=216&amp;crop=smart&amp;auto=webp&amp;s=38d6ebc7409fb54312d9a0059ed8e6cfc361b2dd"
+                },
+                {
+                  "y": 426,
+                  "x": 320,
+                  "u": "https://preview.redd.it/2cudh3i4lqzg1.jpg?width=320&amp;crop=smart&amp;auto=webp&amp;s=19fc5514de6fdb37ee04aef7e2da7de068758df4"
+                },
+                {
+                  "y": 853,
+                  "x": 640,
+                  "u": "https://preview.redd.it/2cudh3i4lqzg1.jpg?width=640&amp;crop=smart&amp;auto=webp&amp;s=d5defa30a6ba72a7c95d8a3c03a835c7b896694f"
+                },
+                {
+                  "y": 1280,
+                  "x": 960,
+                  "u": "https://preview.redd.it/2cudh3i4lqzg1.jpg?width=960&amp;crop=smart&amp;auto=webp&amp;s=769eeace4fa47b698a1e3fd97cdc5ebed67a5de6"
+                },
+                {
+                  "y": 1440,
+                  "x": 1080,
+                  "u": "https://preview.redd.it/2cudh3i4lqzg1.jpg?width=1080&amp;crop=smart&amp;auto=webp&amp;s=1ded1dfa464cf7620e3371f9afd7d81766cd80f0"
+                }
+              ],
+              "s": {
+                "y": 4096,
+                "x": 3072,
+                "u": "https://preview.redd.it/2cudh3i4lqzg1.jpg?width=3072&amp;format=pjpg&amp;auto=webp&amp;s=36cfc8ee35c772f41f6a2c01b3c9d4663ff3ed9d"
+              },
+              "id": "2cudh3i4lqzg1"
+            },
+            "9kcilbu4lqzg1": {
+              "status": "valid",
+              "e": "Image",
+              "m": "image/jpg",
+              "p": [
+                {
+                  "y": 144,
+                  "x": 108,
+                  "u": "https://preview.redd.it/9kcilbu4lqzg1.jpg?width=108&amp;crop=smart&amp;auto=webp&amp;s=472a536d06e957523e67b3bec4f5a1b73bc250b6"
+                },
+                {
+                  "y": 288,
+                  "x": 216,
+                  "u": "https://preview.redd.it/9kcilbu4lqzg1.jpg?width=216&amp;crop=smart&amp;auto=webp&amp;s=3de658a4fae84d9a3ca06315004804e6f666d53d"
+                },
+                {
+                  "y": 426,
+                  "x": 320,
+                  "u": "https://preview.redd.it/9kcilbu4lqzg1.jpg?width=320&amp;crop=smart&amp;auto=webp&amp;s=45a08054a0a36f2b449c2ca4b0c152643fd7ecc9"
+                },
+                {
+                  "y": 853,
+                  "x": 640,
+                  "u": "https://preview.redd.it/9kcilbu4lqzg1.jpg?width=640&amp;crop=smart&amp;auto=webp&amp;s=7082d868d120bc2be15cf1440838be857876e31c"
+                },
+                {
+                  "y": 1280,
+                  "x": 960,
+                  "u": "https://preview.redd.it/9kcilbu4lqzg1.jpg?width=960&amp;crop=smart&amp;auto=webp&amp;s=f26a58f815a16c4e2016c0c43efb612fae4ae897"
+                },
+                {
+                  "y": 1440,
+                  "x": 1080,
+                  "u": "https://preview.redd.it/9kcilbu4lqzg1.jpg?width=1080&amp;crop=smart&amp;auto=webp&amp;s=ca881623ec45384abecabf2d9c8f770103aed7b9"
+                }
+              ],
+              "s": {
+                "y": 4096,
+                "x": 3072,
+                "u": "https://preview.redd.it/9kcilbu4lqzg1.jpg?width=3072&amp;format=pjpg&amp;auto=webp&amp;s=da6bf9ac611a22e5784511561edd1b84c2647b56"
+              },
+              "id": "9kcilbu4lqzg1"
+            }
+          },
+          "name": "t3_1t6egvg",
+          "quarantine": false,
+          "link_flair_text_color": "dark",
+          "upvote_ratio": 0.99,
+          "author_flair_background_color": null,
+          "ups": 1807,
+          "domain": "reddit.com",
+          "media_embed": {
+
+          },
+          "thumbnail_width": 140,
+          "author_flair_template_id": null,
+          "is_original_content": false,
+          "user_reports": [],
+          "secure_media": null,
+          "is_reddit_media_domain": false,
+          "is_meta": false,
+          "category": null,
+          "secure_media_embed": {
+
+          },
+          "gallery_data": {
+            "items": [
+              {
+                "caption": "",
+                "media_id": "2cudh3i4lqzg1",
+                "is_deleted": false,
+                "id": 931775482
+              },
+              {
+                "caption": "",
+                "media_id": "9kcilbu4lqzg1",
+                "is_deleted": false,
+                "id": 931775483
+              },
+              {
+                "caption": "",
+                "media_id": "8xck9b75lqzg1",
+                "is_deleted": false,
+                "id": 931775484
+              }
+            ]
+          },
+          "link_flair_text": "Memes ",
+          "can_mod_post": false,
+          "score": 1807,
+          "approved_by": null,
+          "is_created_from_ads_ui": false,
+          "author_premium": false,
+          "thumbnail": "https://preview.redd.it/2cudh3i4lqzg1.jpg?width=140&amp;height=140&amp;crop=1:1,smart&amp;auto=webp&amp;s=bb37d13fdd31ff6f08108e6b5b8397d4b1a10167",
+          "edited": 1778174694,
+          "author_flair_css_class": null,
+          "author_flair_richtext": [],
+          "gildings": {
+
+          },
+          "content_categories": null,
+          "is_self": false,
+          "subreddit_type": "public",
+          "created": 1778168925,
+          "link_flair_type": "richtext",
+          "wls": 6,
+          "removed_by_category": null,
+          "banned_by": null,
+          "author_flair_type": "text",
+          "total_awards_received": 0,
+          "allow_live_comments": false,
+          "selftext_html": "&lt;!-- SC_OFF --&gt;&lt;div class=\"md\"&gt;&lt;p&gt;Found a very old minox bottle going through dad&amp;#39;s old stuff ,it&amp;#39;s approx 25 yr old and cost 132 rupees &lt;/p&gt;\n\n&lt;p&gt;Update :- Since a lot of people are asking: no, he’s not bald and he never got a transplant 😭&lt;/p&gt;\n\n&lt;p&gt;His hairline is slightly receded (probably around stage 2.5–3) with a bit lower density, but honestly his hair still looks pretty good for 56.&lt;/p&gt;\n\n&lt;p&gt;Apparently he stopped using Minoxidil back then because it was super expensive for him at the time and he wasn’t consistent with it.&lt;/p&gt;\n\n&lt;p&gt;Funny enough, he started using it again after taking me to a dermatologist for my own hair loss treatment 💀&lt;/p&gt;\n&lt;/div&gt;&lt;!-- SC_ON --&gt;",
+          "likes": null,
+          "suggested_sort": null,
+          "banned_at_utc": null,
+          "url_overridden_by_dest": "https://www.reddit.com/gallery/1t6egvg",
+          "view_count": null,
+          "archived": false,
+          "no_follow": false,
+          "is_crosspostable": true,
+          "pinned": false,
+          "over_18": false,
+          "all_awardings": [],
+          "awarders": [],
+          "media_only": false,
+          "link_flair_template_id": "e205a380-98d3-11ef-90f5-a637be3b7b74",
+          "can_gild": false,
+          "spoiler": false,
+          "locked": true,
+          "author_flair_text": null,
+          "treatment_tags": [],
+          "visited": false,
+          "removed_by": null,
+          "mod_note": null,
+          "distinguished": null,
+          "subreddit_id": "t5_3bw9xf",
+          "author_is_blocked": false,
+          "mod_reason_by": null,
+          "num_reports": null,
+          "removal_reason": null,
+          "link_flair_background_color": "#ff8717",
+          "id": "1t6egvg",
+          "is_robot_indexable": true,
+          "report_reasons": null,
+          "author": "TheFlame009",
+          "discussion_type": null,
+          "num_comments": 62,
+          "send_replies": true,
+          "contest_mode": false,
+          "mod_reports": [],
+          "author_patreon_flair": false,
+          "author_flair_text_color": null,
+          "permalink": "/r/IndianHaircare/comments/1t6egvg/pov_you_discover_your_dad_started_the_battle/",
+          "stickied": false,
+          "url": "https://www.reddit.com/gallery/1t6egvg",
+          "subreddit_subscribers": 154667,
+          "created_utc": 1778168925,
+          "num_crossposts": 1,
+          "media": null,
+          "is_video": false
+        }
+      },
+      {
+        "kind": "t3",
+        "data": {
+          "approved_at_utc": null,
+          "subreddit": "IndianHaircare",
+          "selftext": "10 Month Hair Growth Update — Min/Fin Journey \n\nPrevious post:\n\nhttps://www.reddit.com/r/IndianHaircare/s/R2TF3aSazw\n\nPosting an updated progress post and probably the last post.\n\nTimeline\n\n\\- Started topical Minoxidil + Finasteride: 09 July 2025\n\n\\- First progress pic: 22 Aug 2025 (\\~1 month -peak shed)\n\n\\- Switched to oral Min&amp;Fin: 19 Sept 2025\n\n\\- Previous/Second progress pic 31 Oct 2025 (3.5 months)\n\n\\- Latest update pic: 12 May 2026 (10 months total)\n\nAll the comparison pictures are taken at exactly the same place with the same lighting and the same hair length.\n\nCurrent dose - Minoxidil 2.5mg oral daily \n\n\\- Finasteride 1mg oral daily \n\n\\- Vit d3 60k IU monthly once. \n\nFAQs \n\nWhy did you switch to oral ? \n\nSwitched finasteride because of the efficacy, the topical fin(0.1%) is not enough for properly controlling DHT. And switched min oral due to hassle. \n\nAny sexual side effects? \n\nNone - Zero\n\nBrand of meds ? \n\nAll meds are generics meds from Sayacare. You can buy from any generic sources but it should be trusted source eg - Sayacare/Jan Aushadhi/ Dawa india. \n\nDo generic work same as branded? \n\nYes - 100% same.\n\nDid you change diet/gym/sleep? \n\nNo\n\nDid you consult a dermatologist? \n\nNo, i didn't as I did a lot of deep research before starting meds, i mean a lot - why hair loss occurs, what's the mechanism, what's the available treatment, what's are risks , how exactly those meds work, meta studies ,etc etc.\n\n Note :- I don't recommend self medication, please at least visit the dermatologist once for proper diagnosis, especially before starting oral minoxidil please visit a cardiologist for your heart evaluation (not dermatologist) , Minoxidil (oral) has some rare but fatal side effect. Where as you can start finasteride without a worry - just make sure to consult a dermatologist once. (Fin is not recommended for people under 21 &amp; those planning for pregnancy especially women).\n\nDid you use ketoconazole shampoo?\n\nYes , In winter due to dandruff \n\nDid you experience a second shed after switching to oral?\n\nNo. ",
+          "author_fullname": "t2_1uu2mexbk4",
+          "saved": false,
+          "mod_reason_title": null,
+          "gilded": 0,
+          "clicked": false,
+          "is_gallery": true,
+          "title": "M26 - Results - Before &amp; After. 10months.",
+          "link_flair_richtext": [
+            {
+              "e": "text",
+              "t": "Progress 📸"
+            }
+          ],
+          "subreddit_name_prefixed": "r/IndianHaircare",
+          "hidden": false,
+          "pwls": 6,
+          "link_flair_css_class": "",
+          "downs": 0,
+          "thumbnail_height": 78,
+          "top_awarded_type": null,
+          "hide_score": false,
+          "media_metadata": {
+            "6g846eq35q0h1": {
+              "status": "valid",
+              "e": "Image",
+              "m": "image/jpg",
+              "p": [
+                {
+                  "y": 81,
+                  "x": 108,
+                  "u": "https://preview.redd.it/6g846eq35q0h1.jpg?width=108&amp;crop=smart&amp;auto=webp&amp;s=387e8542a0d2ca4fda54c93be345bf032a083a0f"
+                },
+                {
+                  "y": 162,
+                  "x": 216,
+                  "u": "https://preview.redd.it/6g846eq35q0h1.jpg?width=216&amp;crop=smart&amp;auto=webp&amp;s=e17229e185aa7f59da9a4e010936ce684ffed3ab"
+                },
+                {
+                  "y": 240,
+                  "x": 320,
+                  "u": "https://preview.redd.it/6g846eq35q0h1.jpg?width=320&amp;crop=smart&amp;auto=webp&amp;s=5f5d057ed023ec42c56f3fc5751c6bdf6ade666a"
+                },
+                {
+                  "y": 480,
+                  "x": 640,
+                  "u": "https://preview.redd.it/6g846eq35q0h1.jpg?width=640&amp;crop=smart&amp;auto=webp&amp;s=952657710813d3e41b8ac9550ad6945ccf30cefa"
+                },
+                {
+                  "y": 721,
+                  "x": 960,
+                  "u": "https://preview.redd.it/6g846eq35q0h1.jpg?width=960&amp;crop=smart&amp;auto=webp&amp;s=e8847e194cdcd74fd1758fb590a0b63293ffc0fa"
+                },
+                {
+                  "y": 811,
+                  "x": 1080,
+                  "u": "https://preview.redd.it/6g846eq35q0h1.jpg?width=1080&amp;crop=smart&amp;auto=webp&amp;s=1c4e1ccd11aca3628b47e1131e8875be4569c89b"
+                }
+              ],
+              "s": {
+                "y": 2400,
+                "x": 3195,
+                "u": "https://preview.redd.it/6g846eq35q0h1.jpg?width=3195&amp;format=pjpg&amp;auto=webp&amp;s=0996b55202625c2975b49cecc2a9f66874cbe744"
+              },
+              "id": "6g846eq35q0h1"
+            },
+            "na4bju045q0h1": {
+              "status": "valid",
+              "e": "Image",
+              "m": "image/jpg",
+              "p": [
+                {
+                  "y": 81,
+                  "x": 108,
+                  "u": "https://preview.redd.it/na4bju045q0h1.jpg?width=108&amp;crop=smart&amp;auto=webp&amp;s=8716d6d8e94c7c680887e534ceca1f003813af86"
+                },
+                {
+                  "y": 162,
+                  "x": 216,
+                  "u": "https://preview.redd.it/na4bju045q0h1.jpg?width=216&amp;crop=smart&amp;auto=webp&amp;s=aa69383fbf6d8c9356ac3aeafae67f861187c3eb"
+                },
+                {
+                  "y": 240,
+                  "x": 320,
+                  "u": "https://preview.redd.it/na4bju045q0h1.jpg?width=320&amp;crop=smart&amp;auto=webp&amp;s=fc02dbf7c228b5f2ce1dd113a3745f25a405e393"
+                },
+                {
+                  "y": 480,
+                  "x": 640,
+                  "u": "https://preview.redd.it/na4bju045q0h1.jpg?width=640&amp;crop=smart&amp;auto=webp&amp;s=896a4d546e57fa794af377aabb4ac9355d1a7c99"
+                },
+                {
+                  "y": 721,
+                  "x": 960,
+                  "u": "https://preview.redd.it/na4bju045q0h1.jpg?width=960&amp;crop=smart&amp;auto=webp&amp;s=9522d6a57821f2dbc49823729b13d8cf52a25dd2"
+                },
+                {
+                  "y": 811,
+                  "x": 1080,
+                  "u": "https://preview.redd.it/na4bju045q0h1.jpg?width=1080&amp;crop=smart&amp;auto=webp&amp;s=349ed62ba6a23382b049b9fb386f352ef8abf913"
+                }
+              ],
+              "s": {
+                "y": 2400,
+                "x": 3195,
+                "u": "https://preview.redd.it/na4bju045q0h1.jpg?width=3195&amp;format=pjpg&amp;auto=webp&amp;s=a01fbfccbf99142773aa19c58f60042b6c822870"
+              },
+              "id": "na4bju045q0h1"
+            },
+            "eokybtc35q0h1": {
+              "status": "valid",
+              "e": "Image",
+              "m": "image/jpg",
+              "p": [
+                {
+                  "y": 60,
+                  "x": 108,
+                  "u": "https://preview.redd.it/eokybtc35q0h1.jpg?width=108&amp;crop=smart&amp;auto=webp&amp;s=f6cec4c819776b1e6e1781d1f11b43349337ef9b"
+                },
+                {
+                  "y": 121,
+                  "x": 216,
+                  "u": "https://preview.redd.it/eokybtc35q0h1.jpg?width=216&amp;crop=smart&amp;auto=webp&amp;s=782bbf2c8c138dcd70024651abe9549cc6430762"
+                },
+                {
+                  "y": 179,
+                  "x": 320,
+                  "u": "https://preview.redd.it/eokybtc35q0h1.jpg?width=320&amp;crop=smart&amp;auto=webp&amp;s=ec09d3485786bfc0a40e96f2ba0eab987f5b64ed"
+                },
+                {
+                  "y": 359,
+                  "x": 640,
+                  "u": "https://preview.redd.it/eokybtc35q0h1.jpg?width=640&amp;crop=smart&amp;auto=webp&amp;s=790b80fab26e08f0a257401458b608bb13dbabf9"
+                },
+                {
+                  "y": 539,
+                  "x": 960,
+                  "u": "https://preview.redd.it/eokybtc35q0h1.jpg?width=960&amp;crop=smart&amp;auto=webp&amp;s=f1306d4cb615b06d2bb98ec300bb8017f645c3c2"
+                },
+                {
+                  "y": 607,
+                  "x": 1080,
+                  "u": "https://preview.redd.it/eokybtc35q0h1.jpg?width=1080&amp;crop=smart&amp;auto=webp&amp;s=2f512b9e35b23c1404b33553ce1971b79c1ad599"
+                }
+              ],
+              "s": {
+                "y": 2048,
+                "x": 3643,
+                "u": "https://preview.redd.it/eokybtc35q0h1.jpg?width=3643&amp;format=pjpg&amp;auto=webp&amp;s=5adab32be57bee1f954edfa79a1af0340d380f10"
+              },
+              "id": "eokybtc35q0h1"
+            }
+          },
+          "name": "t3_1tb4ud9",
+          "quarantine": false,
+          "link_flair_text_color": "dark",
+          "upvote_ratio": 1,
+          "author_flair_background_color": null,
+          "ups": 391,
+          "domain": "reddit.com",
+          "media_embed": {
+
+          },
+          "thumbnail_width": 140,
+          "author_flair_template_id": null,
+          "is_original_content": false,
+          "user_reports": [],
+          "secure_media": null,
+          "is_reddit_media_domain": false,
+          "is_meta": false,
+          "category": null,
+          "secure_media_embed": {
+
+          },
+          "gallery_data": {
+            "items": [
+              {
+                "caption": "",
+                "media_id": "eokybtc35q0h1",
+                "is_deleted": false,
+                "id": 936131219
+              },
+              {
+                "caption": "",
+                "media_id": "6g846eq35q0h1",
+                "is_deleted": false,
+                "id": 936131220
+              },
+              {
+                "caption": "",
+                "media_id": "na4bju045q0h1",
+                "is_deleted": false,
+                "id": 936131221
+              }
+            ]
+          },
+          "link_flair_text": "Progress 📸",
+          "can_mod_post": false,
+          "score": 391,
+          "approved_by": null,
+          "is_created_from_ads_ui": false,
+          "author_premium": false,
+          "thumbnail": "https://preview.redd.it/eokybtc35q0h1.jpg?width=140&amp;height=78&amp;auto=webp&amp;s=0b603619988f21c2d0a075b30d980688f98c5702",
+          "edited": 1778604067,
+          "author_flair_css_class": null,
+          "author_flair_richtext": [],
+          "gildings": {
+
+          },
+          "content_categories": null,
+          "is_self": false,
+          "subreddit_type": "public",
+          "created": 1778599379,
+          "link_flair_type": "richtext",
+          "wls": 6,
+          "removed_by_category": null,
+          "banned_by": null,
+          "author_flair_type": "text",
+          "total_awards_received": 0,
+          "allow_live_comments": false,
+          "selftext_html": "&lt;!-- SC_OFF --&gt;&lt;div class=\"md\"&gt;&lt;p&gt;10 Month Hair Growth Update — Min/Fin Journey &lt;/p&gt;\n\n&lt;p&gt;Previous post:&lt;/p&gt;\n\n&lt;p&gt;&lt;a href=\"https://www.reddit.com/r/IndianHaircare/s/R2TF3aSazw\"&gt;https://www.reddit.com/r/IndianHaircare/s/R2TF3aSazw&lt;/a&gt;&lt;/p&gt;\n\n&lt;p&gt;Posting an updated progress post and probably the last post.&lt;/p&gt;\n\n&lt;p&gt;Timeline&lt;/p&gt;\n\n&lt;p&gt;- Started topical Minoxidil + Finasteride: 09 July 2025&lt;/p&gt;\n\n&lt;p&gt;- First progress pic: 22 Aug 2025 (~1 month -peak shed)&lt;/p&gt;\n\n&lt;p&gt;- Switched to oral Min&amp;amp;Fin: 19 Sept 2025&lt;/p&gt;\n\n&lt;p&gt;- Previous/Second progress pic 31 Oct 2025 (3.5 months)&lt;/p&gt;\n\n&lt;p&gt;- Latest update pic: 12 May 2026 (10 months total)&lt;/p&gt;\n\n&lt;p&gt;All the comparison pictures are taken at exactly the same place with the same lighting and the same hair length.&lt;/p&gt;\n\n&lt;p&gt;Current dose - Minoxidil 2.5mg oral daily &lt;/p&gt;\n\n&lt;p&gt;- Finasteride 1mg oral daily &lt;/p&gt;\n\n&lt;p&gt;- Vit d3 60k IU monthly once. &lt;/p&gt;\n\n&lt;p&gt;FAQs &lt;/p&gt;\n\n&lt;p&gt;Why did you switch to oral ? &lt;/p&gt;\n\n&lt;p&gt;Switched finasteride because of the efficacy, the topical fin(0.1%) is not enough for properly controlling DHT. And switched min oral due to hassle. &lt;/p&gt;\n\n&lt;p&gt;Any sexual side effects? &lt;/p&gt;\n\n&lt;p&gt;None - Zero&lt;/p&gt;\n\n&lt;p&gt;Brand of meds ? &lt;/p&gt;\n\n&lt;p&gt;All meds are generics meds from Sayacare. You can buy from any generic sources but it should be trusted source eg - Sayacare/Jan Aushadhi/ Dawa india. &lt;/p&gt;\n\n&lt;p&gt;Do generic work same as branded? &lt;/p&gt;\n\n&lt;p&gt;Yes - 100% same.&lt;/p&gt;\n\n&lt;p&gt;Did you change diet/gym/sleep? &lt;/p&gt;\n\n&lt;p&gt;No&lt;/p&gt;\n\n&lt;p&gt;Did you consult a dermatologist? &lt;/p&gt;\n\n&lt;p&gt;No, i didn&amp;#39;t as I did a lot of deep research before starting meds, i mean a lot - why hair loss occurs, what&amp;#39;s the mechanism, what&amp;#39;s the available treatment, what&amp;#39;s are risks , how exactly those meds work, meta studies ,etc etc.&lt;/p&gt;\n\n&lt;p&gt;Note :- I don&amp;#39;t recommend self medication, please at least visit the dermatologist once for proper diagnosis, especially before starting oral minoxidil please visit a cardiologist for your heart evaluation (not dermatologist) , Minoxidil (oral) has some rare but fatal side effect. Where as you can start finasteride without a worry - just make sure to consult a dermatologist once. (Fin is not recommended for people under 21 &amp;amp; those planning for pregnancy especially women).&lt;/p&gt;\n\n&lt;p&gt;Did you use ketoconazole shampoo?&lt;/p&gt;\n\n&lt;p&gt;Yes , In winter due to dandruff &lt;/p&gt;\n\n&lt;p&gt;Did you experience a second shed after switching to oral?&lt;/p&gt;\n\n&lt;p&gt;No. &lt;/p&gt;\n&lt;/div&gt;&lt;!-- SC_ON --&gt;",
+          "likes": null,
+          "suggested_sort": null,
+          "banned_at_utc": null,
+          "url_overridden_by_dest": "https://www.reddit.com/gallery/1tb4ud9",
+          "view_count": null,
+          "archived": false,
+          "no_follow": false,
+          "is_crosspostable": true,
+          "pinned": false,
+          "over_18": false,
+          "all_awardings": [],
+          "awarders": [],
+          "media_only": false,
+          "link_flair_template_id": "377fee38-9dc0-11ef-957a-9e8ee0d5c229",
+          "can_gild": false,
+          "spoiler": false,
+          "locked": false,
+          "author_flair_text": null,
+          "treatment_tags": [],
+          "visited": false,
+          "removed_by": null,
+          "mod_note": null,
+          "distinguished": null,
+          "subreddit_id": "t5_3bw9xf",
+          "author_is_blocked": false,
+          "mod_reason_by": null,
+          "num_reports": null,
+          "removal_reason": null,
+          "link_flair_background_color": "#ff8717",
+          "id": "1tb4ud9",
+          "is_robot_indexable": true,
+          "report_reasons": null,
+          "author": "Brilliant_Bobcat_801",
+          "discussion_type": null,
+          "num_comments": 145,
+          "send_replies": true,
+          "contest_mode": false,
+          "mod_reports": [],
+          "author_patreon_flair": false,
+          "author_flair_text_color": null,
+          "permalink": "/r/IndianHaircare/comments/1tb4ud9/m26_results_before_after_10months/",
+          "stickied": false,
+          "url": "https://www.reddit.com/gallery/1tb4ud9",
+          "subreddit_subscribers": 154667,
+          "created_utc": 1778599379,
+          "num_crossposts": 0,
+          "media": null,
+          "is_video": false
+        }
+      },
+      {
+        "kind": "t3",
+        "data": {
+          "approved_at_utc": null,
+          "subreddit": "IndianHaircare",
+          "selftext": "",
+          "author_fullname": "t2_2bllzveipe",
+          "saved": false,
+          "mod_reason_title": null,
+          "gilded": 0,
+          "clicked": false,
+          "is_gallery": true,
+          "title": "M27,  after transplants my hair conditions",
+          "link_flair_richtext": [
+            {
+              "e": "text",
+              "t": "BEFORE/AFTER "
+            }
+          ],
+          "subreddit_name_prefixed": "r/IndianHaircare",
+          "hidden": false,
+          "pwls": 6,
+          "link_flair_css_class": "",
+          "downs": 0,
+          "thumbnail_height": 140,
+          "top_awarded_type": null,
+          "hide_score": false,
+          "media_metadata": {
+            "79w1og6a891h1": {
+              "status": "valid",
+              "e": "Image",
+              "m": "image/jpg",
+              "p": [
+                {
+                  "y": 135,
+                  "x": 108,
+                  "u": "https://preview.redd.it/79w1og6a891h1.jpg?width=108&amp;crop=smart&amp;auto=webp&amp;s=3ac4904d33291e209954aa394f7f7f9828a16e54"
+                },
+                {
+                  "y": 270,
+                  "x": 216,
+                  "u": "https://preview.redd.it/79w1og6a891h1.jpg?width=216&amp;crop=smart&amp;auto=webp&amp;s=d72fc29ab90282f6f818e93de7bf1ab71ff8ba99"
+                },
+                {
+                  "y": 400,
+                  "x": 320,
+                  "u": "https://preview.redd.it/79w1og6a891h1.jpg?width=320&amp;crop=smart&amp;auto=webp&amp;s=d7ba27bebe5c9c48d2a869345a16fb6e9c96aa22"
+                },
+                {
+                  "y": 800,
+                  "x": 640,
+                  "u": "https://preview.redd.it/79w1og6a891h1.jpg?width=640&amp;crop=smart&amp;auto=webp&amp;s=7ce3fb432e212f29823d2888ae07bf0e8aa645f6"
+                },
+                {
+                  "y": 1200,
+                  "x": 960,
+                  "u": "https://preview.redd.it/79w1og6a891h1.jpg?width=960&amp;crop=smart&amp;auto=webp&amp;s=01874b4512fe335975cd8e20a575e6a9b8f21211"
+                },
+                {
+                  "y": 1350,
+                  "x": 1080,
+                  "u": "https://preview.redd.it/79w1og6a891h1.jpg?width=1080&amp;crop=smart&amp;auto=webp&amp;s=4a799b344d9432abb3d13e06bb8024f3746ca893"
+                }
+              ],
+              "s": {
+                "y": 1350,
+                "x": 1080,
+                "u": "https://preview.redd.it/79w1og6a891h1.jpg?width=1080&amp;format=pjpg&amp;auto=webp&amp;s=f7e7775227f31d2ac86dc8fb836ac7569373677b"
+              },
+              "id": "79w1og6a891h1"
+            },
+            "uflaug6a891h1": {
+              "status": "valid",
+              "e": "Image",
+              "m": "image/jpg",
+              "p": [
+                {
+                  "y": 135,
+                  "x": 108,
+                  "u": "https://preview.redd.it/uflaug6a891h1.jpg?width=108&amp;crop=smart&amp;auto=webp&amp;s=7f9cb5541a30c16abb3fab13b892d9d09492be9a"
+                },
+                {
+                  "y": 270,
+                  "x": 216,
+                  "u": "https://preview.redd.it/uflaug6a891h1.jpg?width=216&amp;crop=smart&amp;auto=webp&amp;s=a123caa858444a44a5d2cc419925cf7655b20cc9"
+                },
+                {
+                  "y": 400,
+                  "x": 320,
+                  "u": "https://preview.redd.it/uflaug6a891h1.jpg?width=320&amp;crop=smart&amp;auto=webp&amp;s=69c3c173b602f83deaea07b2519dba31cfb45a23"
+                },
+                {
+                  "y": 800,
+                  "x": 640,
+                  "u": "https://preview.redd.it/uflaug6a891h1.jpg?width=640&amp;crop=smart&amp;auto=webp&amp;s=50734687558258896faaf14b59b7ee1605638b72"
+                },
+                {
+                  "y": 1200,
+                  "x": 960,
+                  "u": "https://preview.redd.it/uflaug6a891h1.jpg?width=960&amp;crop=smart&amp;auto=webp&amp;s=ad498d10162af25bc49bd2044f6a6ba60cbb302d"
+                },
+                {
+                  "y": 1350,
+                  "x": 1080,
+                  "u": "https://preview.redd.it/uflaug6a891h1.jpg?width=1080&amp;crop=smart&amp;auto=webp&amp;s=747acc558d75e2f811cd2573d5fed3d9e1b1f5a0"
+                }
+              ],
+              "s": {
+                "y": 1350,
+                "x": 1080,
+                "u": "https://preview.redd.it/uflaug6a891h1.jpg?width=1080&amp;format=pjpg&amp;auto=webp&amp;s=a518115e2a420348af282fe946d9c57952cdc919"
+              },
+              "id": "uflaug6a891h1"
+            },
+            "pencbh6a891h1": {
+              "status": "valid",
+              "e": "Image",
+              "m": "image/jpg",
+              "p": [
+                {
+                  "y": 135,
+                  "x": 108,
+                  "u": "https://preview.redd.it/pencbh6a891h1.jpg?width=108&amp;crop=smart&amp;auto=webp&amp;s=0339ee632ab32ab91d8d8e26a4d1a4ba842084fd"
+                },
+                {
+                  "y": 270,
+                  "x": 216,
+                  "u": "https://preview.redd.it/pencbh6a891h1.jpg?width=216&amp;crop=smart&amp;auto=webp&amp;s=d46aac67a9ca604c65c92b57742635a5fae035f8"
+                },
+                {
+                  "y": 400,
+                  "x": 320,
+                  "u": "https://preview.redd.it/pencbh6a891h1.jpg?width=320&amp;crop=smart&amp;auto=webp&amp;s=9ecf322dc92c6e8270798a0a1b0b1356d5d7d37c"
+                },
+                {
+                  "y": 800,
+                  "x": 640,
+                  "u": "https://preview.redd.it/pencbh6a891h1.jpg?width=640&amp;crop=smart&amp;auto=webp&amp;s=6ad8643bcff5188a61c6dca99956da1972c30f90"
+                },
+                {
+                  "y": 1200,
+                  "x": 960,
+                  "u": "https://preview.redd.it/pencbh6a891h1.jpg?width=960&amp;crop=smart&amp;auto=webp&amp;s=718757c14e2f49d335efc3c3e20a2457b1c0d775"
+                },
+                {
+                  "y": 1350,
+                  "x": 1080,
+                  "u": "https://preview.redd.it/pencbh6a891h1.jpg?width=1080&amp;crop=smart&amp;auto=webp&amp;s=0aab3ca209baba28bc10430a60116ca58b87b7c3"
+                }
+              ],
+              "s": {
+                "y": 1350,
+                "x": 1080,
+                "u": "https://preview.redd.it/pencbh6a891h1.jpg?width=1080&amp;format=pjpg&amp;auto=webp&amp;s=4ca4ce4e67e21437dda8dc004e2fbb6fbb6e7b04"
+              },
+              "id": "pencbh6a891h1"
+            },
+            "hv4w1j6a891h1": {
+              "status": "valid",
+              "e": "Image",
+              "m": "image/jpg",
+              "p": [
+                {
+                  "y": 135,
+                  "x": 108,
+                  "u": "https://preview.redd.it/hv4w1j6a891h1.jpg?width=108&amp;crop=smart&amp;auto=webp&amp;s=b86974d1c26f2ba4fcc9b79c17d22a15a8755f20"
+                },
+                {
+                  "y": 270,
+                  "x": 216,
+                  "u": "https://preview.redd.it/hv4w1j6a891h1.jpg?width=216&amp;crop=smart&amp;auto=webp&amp;s=0c41d4406fedfec663953493c9243088d659f22b"
+                },
+                {
+                  "y": 400,
+                  "x": 320,
+                  "u": "https://preview.redd.it/hv4w1j6a891h1.jpg?width=320&amp;crop=smart&amp;auto=webp&amp;s=eb4794fb030f51660254912577e2ba5bb84d25ab"
+                },
+                {
+                  "y": 800,
+                  "x": 640,
+                  "u": "https://preview.redd.it/hv4w1j6a891h1.jpg?width=640&amp;crop=smart&amp;auto=webp&amp;s=0c6b11ded549105edba88ca6c442ea5424f62160"
+                },
+                {
+                  "y": 1200,
+                  "x": 960,
+                  "u": "https://preview.redd.it/hv4w1j6a891h1.jpg?width=960&amp;crop=smart&amp;auto=webp&amp;s=b01f73ba8aaf080cd73bebc45ccbe232d99a1a58"
+                },
+                {
+                  "y": 1350,
+                  "x": 1080,
+                  "u": "https://preview.redd.it/hv4w1j6a891h1.jpg?width=1080&amp;crop=smart&amp;auto=webp&amp;s=dbfa9c2dc518f2cc814c765fcf408ab1af98cb05"
+                }
+              ],
+              "s": {
+                "y": 1350,
+                "x": 1080,
+                "u": "https://preview.redd.it/hv4w1j6a891h1.jpg?width=1080&amp;format=pjpg&amp;auto=webp&amp;s=ea43a8b0b48ac1b682b17566033623acdb03ee6b"
+              },
+              "id": "hv4w1j6a891h1"
+            },
+            "9dkxog6a891h1": {
+              "status": "valid",
+              "e": "Image",
+              "m": "image/jpg",
+              "p": [
+                {
+                  "y": 135,
+                  "x": 108,
+                  "u": "https://preview.redd.it/9dkxog6a891h1.jpg?width=108&amp;crop=smart&amp;auto=webp&amp;s=5badd40ad30ba31484241eab42c866ad70517d26"
+                },
+                {
+                  "y": 270,
+                  "x": 216,
+                  "u": "https://preview.redd.it/9dkxog6a891h1.jpg?width=216&amp;crop=smart&amp;auto=webp&amp;s=b4cf3db90909f6bb5e9ced0e856722f43e486f1e"
+                },
+                {
+                  "y": 400,
+                  "x": 320,
+                  "u": "https://preview.redd.it/9dkxog6a891h1.jpg?width=320&amp;crop=smart&amp;auto=webp&amp;s=b7a14835cd72010d385f6c95794a392ab43d4100"
+                },
+                {
+                  "y": 800,
+                  "x": 640,
+                  "u": "https://preview.redd.it/9dkxog6a891h1.jpg?width=640&amp;crop=smart&amp;auto=webp&amp;s=19a5501a4eaecf950fb38e2a992fa8b8f92df59a"
+                },
+                {
+                  "y": 1200,
+                  "x": 960,
+                  "u": "https://preview.redd.it/9dkxog6a891h1.jpg?width=960&amp;crop=smart&amp;auto=webp&amp;s=813d6b03487e325aac9ba22dca93b7a8c64b13db"
+                },
+                {
+                  "y": 1350,
+                  "x": 1080,
+                  "u": "https://preview.redd.it/9dkxog6a891h1.jpg?width=1080&amp;crop=smart&amp;auto=webp&amp;s=d1ecec024322d97eebdf1c631c56137fb3f2ddba"
+                }
+              ],
+              "s": {
+                "y": 1350,
+                "x": 1080,
+                "u": "https://preview.redd.it/9dkxog6a891h1.jpg?width=1080&amp;format=pjpg&amp;auto=webp&amp;s=87520e7d7311dd4ac0048631ecdbaeeb01c00f27"
+              },
+              "id": "9dkxog6a891h1"
+            },
+            "u4b7nj6a891h1": {
+              "status": "valid",
+              "e": "Image",
+              "m": "image/jpg",
+              "p": [
+                {
+                  "y": 135,
+                  "x": 108,
+                  "u": "https://preview.redd.it/u4b7nj6a891h1.jpg?width=108&amp;crop=smart&amp;auto=webp&amp;s=bac8cf45d693c77c3fbfe76b4ccadc6e58e56eff"
+                },
+                {
+                  "y": 270,
+                  "x": 216,
+                  "u": "https://preview.redd.it/u4b7nj6a891h1.jpg?width=216&amp;crop=smart&amp;auto=webp&amp;s=e6ac4053eec7ad2e59eb47a9e8569f5be3dffca3"
+                },
+                {
+                  "y": 400,
+                  "x": 320,
+                  "u": "https://preview.redd.it/u4b7nj6a891h1.jpg?width=320&amp;crop=smart&amp;auto=webp&amp;s=8f6ca2f0a2644fdc3bfd823156c98f098eec4f65"
+                },
+                {
+                  "y": 800,
+                  "x": 640,
+                  "u": "https://preview.redd.it/u4b7nj6a891h1.jpg?width=640&amp;crop=smart&amp;auto=webp&amp;s=d9a431ec7d94bbd31b874baa77881cda41bfc0ec"
+                },
+                {
+                  "y": 1200,
+                  "x": 960,
+                  "u": "https://preview.redd.it/u4b7nj6a891h1.jpg?width=960&amp;crop=smart&amp;auto=webp&amp;s=3ba166cc223954abcdd3d8761d21c8262acf6979"
+                },
+                {
+                  "y": 1350,
+                  "x": 1080,
+                  "u": "https://preview.redd.it/u4b7nj6a891h1.jpg?width=1080&amp;crop=smart&amp;auto=webp&amp;s=c2fadd1b18a53e24d6aca23320136197e13258ff"
+                }
+              ],
+              "s": {
+                "y": 1350,
+                "x": 1080,
+                "u": "https://preview.redd.it/u4b7nj6a891h1.jpg?width=1080&amp;format=pjpg&amp;auto=webp&amp;s=316726dbeeac7964c24a0ecfa64f9a035b36703c"
+              },
+              "id": "u4b7nj6a891h1"
+            },
+            "akj8sh6a891h1": {
+              "status": "valid",
+              "e": "Image",
+              "m": "image/jpg",
+              "p": [
+                {
+                  "y": 135,
+                  "x": 108,
+                  "u": "https://preview.redd.it/akj8sh6a891h1.jpg?width=108&amp;crop=smart&amp;auto=webp&amp;s=00deceadd9dc6078b0570f4659c796616795b88e"
+                },
+                {
+                  "y": 270,
+                  "x": 216,
+                  "u": "https://preview.redd.it/akj8sh6a891h1.jpg?width=216&amp;crop=smart&amp;auto=webp&amp;s=18004b98357a3185ebb633da1e779a83a4216769"
+                },
+                {
+                  "y": 400,
+                  "x": 320,
+                  "u": "https://preview.redd.it/akj8sh6a891h1.jpg?width=320&amp;crop=smart&amp;auto=webp&amp;s=bc0b5d4fda7572388aee01a74bebae22973649ac"
+                },
+                {
+                  "y": 800,
+                  "x": 640,
+                  "u": "https://preview.redd.it/akj8sh6a891h1.jpg?width=640&amp;crop=smart&amp;auto=webp&amp;s=f60f6c1c3b5f000dbe56738082fd0f59ce1fe910"
+                },
+                {
+                  "y": 1200,
+                  "x": 960,
+                  "u": "https://preview.redd.it/akj8sh6a891h1.jpg?width=960&amp;crop=smart&amp;auto=webp&amp;s=df7a593abc0af4b474f5e9aff289aac3189e2c63"
+                },
+                {
+                  "y": 1350,
+                  "x": 1080,
+                  "u": "https://preview.redd.it/akj8sh6a891h1.jpg?width=1080&amp;crop=smart&amp;auto=webp&amp;s=47b559e5beb187d8664698bfc69fe26b5acb6850"
+                }
+              ],
+              "s": {
+                "y": 1350,
+                "x": 1080,
+                "u": "https://preview.redd.it/akj8sh6a891h1.jpg?width=1080&amp;format=pjpg&amp;auto=webp&amp;s=ac4cee63f4d748d44b2670596d520d91044bac97"
+              },
+              "id": "akj8sh6a891h1"
+            },
+            "1ue65j6a891h1": {
+              "status": "valid",
+              "e": "Image",
+              "m": "image/jpg",
+              "p": [
+                {
+                  "y": 135,
+                  "x": 108,
+                  "u": "https://preview.redd.it/1ue65j6a891h1.jpg?width=108&amp;crop=smart&amp;auto=webp&amp;s=89f7b978bc139058051e8723fa4578e7c47beb81"
+                },
+                {
+                  "y": 270,
+                  "x": 216,
+                  "u": "https://preview.redd.it/1ue65j6a891h1.jpg?width=216&amp;crop=smart&amp;auto=webp&amp;s=b027c89115e1afa11060aad366c19cd2ba45656c"
+                },
+                {
+                  "y": 400,
+                  "x": 320,
+                  "u": "https://preview.redd.it/1ue65j6a891h1.jpg?width=320&amp;crop=smart&amp;auto=webp&amp;s=f44f8d0129951c5e3d4835bbd024f98496229a4a"
+                },
+                {
+                  "y": 800,
+                  "x": 640,
+                  "u": "https://preview.redd.it/1ue65j6a891h1.jpg?width=640&amp;crop=smart&amp;auto=webp&amp;s=66f144bb08f702c2850ac5be5ad404cf77e7b4a2"
+                },
+                {
+                  "y": 1200,
+                  "x": 960,
+                  "u": "https://preview.redd.it/1ue65j6a891h1.jpg?width=960&amp;crop=smart&amp;auto=webp&amp;s=dde72eee3c9e8fe4b30b3d797732bad684a0bcb5"
+                },
+                {
+                  "y": 1350,
+                  "x": 1080,
+                  "u": "https://preview.redd.it/1ue65j6a891h1.jpg?width=1080&amp;crop=smart&amp;auto=webp&amp;s=fe6fcee1cb91bbb7f1a1b114be04a389f60a5e92"
+                }
+              ],
+              "s": {
+                "y": 1350,
+                "x": 1080,
+                "u": "https://preview.redd.it/1ue65j6a891h1.jpg?width=1080&amp;format=pjpg&amp;auto=webp&amp;s=473688a5b6d5cb8703340ed5e677f571053ef1b9"
+              },
+              "id": "1ue65j6a891h1"
+            },
+            "9imvpg6a891h1": {
+              "status": "valid",
+              "e": "Image",
+              "m": "image/jpg",
+              "p": [
+                {
+                  "y": 135,
+                  "x": 108,
+                  "u": "https://preview.redd.it/9imvpg6a891h1.jpg?width=108&amp;crop=smart&amp;auto=webp&amp;s=8c343fdce5f8911252365b044fe0688a73413d5b"
+                },
+                {
+                  "y": 270,
+                  "x": 216,
+                  "u": "https://preview.redd.it/9imvpg6a891h1.jpg?width=216&amp;crop=smart&amp;auto=webp&amp;s=3e8be6a0cc5c23c63e4dd794ac944381d0e2a4ad"
+                },
+                {
+                  "y": 400,
+                  "x": 320,
+                  "u": "https://preview.redd.it/9imvpg6a891h1.jpg?width=320&amp;crop=smart&amp;auto=webp&amp;s=589d9e73e0b2ac97bdd4691c6a11bbf779ff4c83"
+                },
+                {
+                  "y": 800,
+                  "x": 640,
+                  "u": "https://preview.redd.it/9imvpg6a891h1.jpg?width=640&amp;crop=smart&amp;auto=webp&amp;s=bfd483bf5d645fdaf7c22b600669bf1d84519caa"
+                },
+                {
+                  "y": 1200,
+                  "x": 960,
+                  "u": "https://preview.redd.it/9imvpg6a891h1.jpg?width=960&amp;crop=smart&amp;auto=webp&amp;s=39bd8497c618c099e15e874561f6b94aca9c8c1a"
+                },
+                {
+                  "y": 1350,
+                  "x": 1080,
+                  "u": "https://preview.redd.it/9imvpg6a891h1.jpg?width=1080&amp;crop=smart&amp;auto=webp&amp;s=c276eb2f6d3708d1ded21aa98b3811c1566fc63c"
+                }
+              ],
+              "s": {
+                "y": 1350,
+                "x": 1080,
+                "u": "https://preview.redd.it/9imvpg6a891h1.jpg?width=1080&amp;format=pjpg&amp;auto=webp&amp;s=7744886aab7037e1d3faea6662003233505a57ce"
+              },
+              "id": "9imvpg6a891h1"
+            },
+            "3n498h6a891h1": {
+              "status": "valid",
+              "e": "Image",
+              "m": "image/jpg",
+              "p": [
+                {
+                  "y": 135,
+                  "x": 108,
+                  "u": "https://preview.redd.it/3n498h6a891h1.jpg?width=108&amp;crop=smart&amp;auto=webp&amp;s=f1538ffde3017bd20b61d4a148e3890f0b02e3bf"
+                },
+                {
+                  "y": 270,
+                  "x": 216,
+                  "u": "https://preview.redd.it/3n498h6a891h1.jpg?width=216&amp;crop=smart&amp;auto=webp&amp;s=eaff97a60d39313ca29f46c0655a6d1b5979adde"
+                },
+                {
+                  "y": 400,
+                  "x": 320,
+                  "u": "https://preview.redd.it/3n498h6a891h1.jpg?width=320&amp;crop=smart&amp;auto=webp&amp;s=00c910047e31c146da1da47b638d4e9c274b7166"
+                },
+                {
+                  "y": 800,
+                  "x": 640,
+                  "u": "https://preview.redd.it/3n498h6a891h1.jpg?width=640&amp;crop=smart&amp;auto=webp&amp;s=604148757b215c4d15631f111120292a802e4091"
+                },
+                {
+                  "y": 1200,
+                  "x": 960,
+                  "u": "https://preview.redd.it/3n498h6a891h1.jpg?width=960&amp;crop=smart&amp;auto=webp&amp;s=2b6457021a27f4b4fd985da360a8f195cd36927a"
+                },
+                {
+                  "y": 1350,
+                  "x": 1080,
+                  "u": "https://preview.redd.it/3n498h6a891h1.jpg?width=1080&amp;crop=smart&amp;auto=webp&amp;s=0c89fe2cdcf5448de1e79c5e82c32e71bcf0e6f0"
+                }
+              ],
+              "s": {
+                "y": 1350,
+                "x": 1080,
+                "u": "https://preview.redd.it/3n498h6a891h1.jpg?width=1080&amp;format=pjpg&amp;auto=webp&amp;s=9e77267c1af19cbf1b93f7126bf9a4dc380b8a25"
+              },
+              "id": "3n498h6a891h1"
+            }
+          },
+          "name": "t3_1tdp5id",
+          "quarantine": false,
+          "link_flair_text_color": "dark",
+          "upvote_ratio": 0.95,
+          "author_flair_background_color": null,
+          "ups": 363,
+          "domain": "reddit.com",
+          "media_embed": {
+
+          },
+          "thumbnail_width": 140,
+          "author_flair_template_id": null,
+          "is_original_content": false,
+          "user_reports": [],
+          "secure_media": null,
+          "is_reddit_media_domain": false,
+          "is_meta": false,
+          "category": null,
+          "secure_media_embed": {
+
+          },
+          "gallery_data": {
+            "items": [
+              {
+                "media_id": "pencbh6a891h1",
+                "is_deleted": false,
+                "id": 938531650
+              },
+              {
+                "media_id": "3n498h6a891h1",
+                "is_deleted": false,
+                "id": 938531651
+              },
+              {
+                "media_id": "9imvpg6a891h1",
+                "is_deleted": false,
+                "id": 938531652
+              },
+              {
+                "media_id": "u4b7nj6a891h1",
+                "is_deleted": false,
+                "id": 938531653
+              },
+              {
+                "media_id": "79w1og6a891h1",
+                "is_deleted": false,
+                "id": 938531654
+              },
+              {
+                "media_id": "hv4w1j6a891h1",
+                "is_deleted": false,
+                "id": 938531655
+              },
+              {
+                "media_id": "uflaug6a891h1",
+                "is_deleted": false,
+                "id": 938531656
+              },
+              {
+                "media_id": "9dkxog6a891h1",
+                "is_deleted": false,
+                "id": 938531657
+              },
+              {
+                "media_id": "1ue65j6a891h1",
+                "is_deleted": false,
+                "id": 938531658
+              },
+              {
+                "media_id": "akj8sh6a891h1",
+                "is_deleted": false,
+                "id": 938531659
+              }
+            ]
+          },
+          "link_flair_text": "BEFORE/AFTER ",
+          "can_mod_post": false,
+          "score": 363,
+          "approved_by": null,
+          "is_created_from_ads_ui": false,
+          "author_premium": false,
+          "thumbnail": "https://preview.redd.it/pencbh6a891h1.jpg?width=140&amp;height=140&amp;crop=1:1,smart&amp;auto=webp&amp;s=f71d43e7d2f1883fa8acf61a95286b94a2200fd9",
+          "edited": false,
+          "author_flair_css_class": null,
+          "author_flair_richtext": [],
+          "gildings": {
+
+          },
+          "content_categories": null,
+          "is_self": false,
+          "subreddit_type": "public",
+          "created": 1778830547,
+          "link_flair_type": "richtext",
+          "wls": 6,
+          "removed_by_category": null,
+          "banned_by": null,
+          "author_flair_type": "text",
+          "total_awards_received": 0,
+          "allow_live_comments": false,
+          "selftext_html": null,
+          "likes": null,
+          "suggested_sort": null,
+          "banned_at_utc": null,
+          "url_overridden_by_dest": "https://www.reddit.com/gallery/1tdp5id",
+          "view_count": null,
+          "archived": false,
+          "no_follow": false,
+          "is_crosspostable": true,
+          "pinned": false,
+          "over_18": false,
+          "all_awardings": [],
+          "awarders": [],
+          "media_only": false,
+          "link_flair_template_id": "3e16a354-a23e-11ef-9f0b-ea20210a9cdd",
+          "can_gild": false,
+          "spoiler": false,
+          "locked": false,
+          "author_flair_text": null,
+          "treatment_tags": [],
+          "visited": false,
+          "removed_by": null,
+          "mod_note": null,
+          "distinguished": null,
+          "subreddit_id": "t5_3bw9xf",
+          "author_is_blocked": false,
+          "mod_reason_by": null,
+          "num_reports": null,
+          "removal_reason": null,
+          "link_flair_background_color": "#ff8717",
+          "id": "1tdp5id",
+          "is_robot_indexable": true,
+          "report_reasons": null,
+          "author": "Intelligent-Top838",
+          "discussion_type": null,
+          "num_comments": 98,
+          "send_replies": true,
+          "contest_mode": false,
+          "mod_reports": [],
+          "author_patreon_flair": false,
+          "author_flair_text_color": null,
+          "permalink": "/r/IndianHaircare/comments/1tdp5id/m27_after_transplants_my_hair_conditions/",
+          "stickied": false,
+          "url": "https://www.reddit.com/gallery/1tdp5id",
+          "subreddit_subscribers": 154667,
+          "created_utc": 1778830547,
+          "num_crossposts": 0,
+          "media": null,
+          "is_video": false
+        }
+      },
+      {
+        "kind": "t3",
+        "data": {
+          "approved_at_utc": null,
+          "subreddit": "IndianHaircare",
+          "selftext": "After my last post people have been asking for my before and after pics, so here u go ",
+          "author_fullname": "t2_20i7qcgdnz",
+          "saved": false,
+          "mod_reason_title": null,
+          "gilded": 0,
+          "clicked": false,
+          "is_gallery": true,
+          "title": "M23, what daily head massage can do",
+          "link_flair_richtext": [
+            {
+              "e": "text",
+              "t": "Hairfall"
+            }
+          ],
+          "subreddit_name_prefixed": "r/IndianHaircare",
+          "hidden": false,
+          "pwls": 6,
+          "link_flair_css_class": "Help",
+          "downs": 0,
+          "thumbnail_height": 140,
+          "top_awarded_type": null,
+          "hide_score": false,
+          "media_metadata": {
+            "y9u7abjaw21h1": {
+              "status": "valid",
+              "e": "Image",
+              "m": "image/jpg",
+              "p": [
+                {
+                  "y": 165,
+                  "x": 108,
+                  "u": "https://preview.redd.it/y9u7abjaw21h1.jpg?width=108&amp;crop=smart&amp;auto=webp&amp;s=be73e3e640da20f9a3ba9c5d3b1cb8481cbac0ce"
+                },
+                {
+                  "y": 330,
+                  "x": 216,
+                  "u": "https://preview.redd.it/y9u7abjaw21h1.jpg?width=216&amp;crop=smart&amp;auto=webp&amp;s=f0a97abc79412a120e294bb3e8d90ce740ef2802"
+                },
+                {
+                  "y": 488,
+                  "x": 320,
+                  "u": "https://preview.redd.it/y9u7abjaw21h1.jpg?width=320&amp;crop=smart&amp;auto=webp&amp;s=e3b7fefbca0f8deafa85da38ea914486067dcc6a"
+                },
+                {
+                  "y": 977,
+                  "x": 640,
+                  "u": "https://preview.redd.it/y9u7abjaw21h1.jpg?width=640&amp;crop=smart&amp;auto=webp&amp;s=bc11f135772208c70782777f2244fd6b9a9145ac"
+                },
+                {
+                  "y": 1466,
+                  "x": 960,
+                  "u": "https://preview.redd.it/y9u7abjaw21h1.jpg?width=960&amp;crop=smart&amp;auto=webp&amp;s=66e0859f0efd06c60d039cba00a3094cb0fea7de"
+                }
+              ],
+              "s": {
+                "y": 1540,
+                "x": 1008,
+                "u": "https://preview.redd.it/y9u7abjaw21h1.jpg?width=1008&amp;format=pjpg&amp;auto=webp&amp;s=2eb0f59aa0e2a0ff454794f069e0702452ff7725"
+              },
+              "id": "y9u7abjaw21h1"
+            },
+            "ctnivifaw21h1": {
+              "status": "valid",
+              "e": "Image",
+              "m": "image/jpg",
+              "p": [
+                {
+                  "y": 163,
+                  "x": 108,
+                  "u": "https://preview.redd.it/ctnivifaw21h1.jpg?width=108&amp;crop=smart&amp;auto=webp&amp;s=6c924df51267a061d53c527949c3a0ebeb206488"
+                },
+                {
+                  "y": 326,
+                  "x": 216,
+                  "u": "https://preview.redd.it/ctnivifaw21h1.jpg?width=216&amp;crop=smart&amp;auto=webp&amp;s=2b3d521df57b00dac4eaea644b02519b0a66db50"
+                },
+                {
+                  "y": 483,
+                  "x": 320,
+                  "u": "https://preview.redd.it/ctnivifaw21h1.jpg?width=320&amp;crop=smart&amp;auto=webp&amp;s=fb5a2ad7f347c630b8a625a681172dde4144aa56"
+                },
+                {
+                  "y": 966,
+                  "x": 640,
+                  "u": "https://preview.redd.it/ctnivifaw21h1.jpg?width=640&amp;crop=smart&amp;auto=webp&amp;s=5115a28d1ce2747aa74e02e0aedc9e6d744fe94f"
+                },
+                {
+                  "y": 1449,
+                  "x": 960,
+                  "u": "https://preview.redd.it/ctnivifaw21h1.jpg?width=960&amp;crop=smart&amp;auto=webp&amp;s=a84c5712b193b3ceb3c9ccfe4f841a29a91cb1b1"
+                }
+              ],
+              "s": {
+                "y": 1560,
+                "x": 1033,
+                "u": "https://preview.redd.it/ctnivifaw21h1.jpg?width=1033&amp;format=pjpg&amp;auto=webp&amp;s=770d4a3a544c606bfe6b60cc3a4d0453a1937c88"
+              },
+              "id": "ctnivifaw21h1"
+            },
+            "osnouomaw21h1": {
+              "status": "valid",
+              "e": "Image",
+              "m": "image/jpg",
+              "p": [
+                {
+                  "y": 144,
+                  "x": 108,
+                  "u": "https://preview.redd.it/osnouomaw21h1.jpg?width=108&amp;crop=smart&amp;auto=webp&amp;s=2235eff6c26bc33097f49051b481561404185640"
+                },
+                {
+                  "y": 288,
+                  "x": 216,
+                  "u": "https://preview.redd.it/osnouomaw21h1.jpg?width=216&amp;crop=smart&amp;auto=webp&amp;s=311405335aa71d178b1a05eeaef57fc5b519df5c"
+                },
+                {
+                  "y": 427,
+                  "x": 320,
+                  "u": "https://preview.redd.it/osnouomaw21h1.jpg?width=320&amp;crop=smart&amp;auto=webp&amp;s=acf2d8aafcbec225aa6cd6f1fc89518b644238be"
+                },
+                {
+                  "y": 855,
+                  "x": 640,
+                  "u": "https://preview.redd.it/osnouomaw21h1.jpg?width=640&amp;crop=smart&amp;auto=webp&amp;s=d017f73034079e3dcb565a556bdde7448baa385b"
+                },
+                {
+                  "y": 1282,
+                  "x": 960,
+                  "u": "https://preview.redd.it/osnouomaw21h1.jpg?width=960&amp;crop=smart&amp;auto=webp&amp;s=492797a40e642615e8fe3eed3a976d04a63e4e94"
+                },
+                {
+                  "y": 1443,
+                  "x": 1080,
+                  "u": "https://preview.redd.it/osnouomaw21h1.jpg?width=1080&amp;crop=smart&amp;auto=webp&amp;s=28ed6327adc4839b4dc39f70ffc2efefffcb755c"
+                }
+              ],
+              "s": {
+                "y": 4640,
+                "x": 3472,
+                "u": "https://preview.redd.it/osnouomaw21h1.jpg?width=3472&amp;format=pjpg&amp;auto=webp&amp;s=121bc628def764a94baa649667af4e2cf9883397"
+              },
+              "id": "osnouomaw21h1"
+            },
+            "kmkvq21aw21h1": {
+              "status": "valid",
+              "e": "Image",
+              "m": "image/jpg",
+              "p": [
+                {
+                  "y": 108,
+                  "x": 108,
+                  "u": "https://preview.redd.it/kmkvq21aw21h1.jpg?width=108&amp;crop=smart&amp;auto=webp&amp;s=2732909684cbbd67b17ee5a19eecddf880b215e8"
+                },
+                {
+                  "y": 216,
+                  "x": 216,
+                  "u": "https://preview.redd.it/kmkvq21aw21h1.jpg?width=216&amp;crop=smart&amp;auto=webp&amp;s=51364418b06eab44f0d6351622c435aca4a92745"
+                },
+                {
+                  "y": 320,
+                  "x": 320,
+                  "u": "https://preview.redd.it/kmkvq21aw21h1.jpg?width=320&amp;crop=smart&amp;auto=webp&amp;s=8d35d456d322cd8de630bff5c165fb142a6a9d4b"
+                },
+                {
+                  "y": 640,
+                  "x": 640,
+                  "u": "https://preview.redd.it/kmkvq21aw21h1.jpg?width=640&amp;crop=smart&amp;auto=webp&amp;s=e54e8a5c837d6c5e4b9c369f263b0d5044fef21c"
+                },
+                {
+                  "y": 960,
+                  "x": 960,
+                  "u": "https://preview.redd.it/kmkvq21aw21h1.jpg?width=960&amp;crop=smart&amp;auto=webp&amp;s=250e4042a30678f8720c310f01bf24f6f0c1de5d"
+                },
+                {
+                  "y": 1080,
+                  "x": 1080,
+                  "u": "https://preview.redd.it/kmkvq21aw21h1.jpg?width=1080&amp;crop=smart&amp;auto=webp&amp;s=59181cc155342009f2f4e4871a1b59908b149009"
+                }
+              ],
+              "s": {
+                "y": 3464,
+                "x": 3464,
+                "u": "https://preview.redd.it/kmkvq21aw21h1.jpg?width=3464&amp;format=pjpg&amp;auto=webp&amp;s=dd73711c3cc012b2bedb2a85cc74e5e3ecd46473"
+              },
+              "id": "kmkvq21aw21h1"
+            }
+          },
+          "name": "t3_1tctvan",
+          "quarantine": false,
+          "link_flair_text_color": "dark",
+          "upvote_ratio": 0.78,
+          "author_flair_background_color": null,
+          "ups": 347,
+          "domain": "reddit.com",
+          "media_embed": {
+
+          },
+          "thumbnail_width": 140,
+          "author_flair_template_id": null,
+          "is_original_content": false,
+          "user_reports": [],
+          "secure_media": null,
+          "is_reddit_media_domain": false,
+          "is_meta": false,
+          "category": null,
+          "secure_media_embed": {
+
+          },
+          "gallery_data": {
+            "items": [
+              {
+                "caption": "",
+                "media_id": "kmkvq21aw21h1",
+                "is_deleted": false,
+                "id": 937717499
+              },
+              {
+                "caption": "",
+                "media_id": "ctnivifaw21h1",
+                "is_deleted": false,
+                "id": 937717500
+              },
+              {
+                "caption": "",
+                "media_id": "y9u7abjaw21h1",
+                "is_deleted": false,
+                "id": 937717501
+              },
+              {
+                "caption": "",
+                "media_id": "osnouomaw21h1",
+                "is_deleted": false,
+                "id": 937717502
+              }
+            ]
+          },
+          "link_flair_text": "Hairfall",
+          "can_mod_post": false,
+          "score": 347,
+          "approved_by": null,
+          "is_created_from_ads_ui": false,
+          "author_premium": false,
+          "thumbnail": "https://preview.redd.it/kmkvq21aw21h1.jpg?width=140&amp;height=140&amp;auto=webp&amp;s=aa7eb8ae3f6784b71ed9d2bfc5230bd3cff1a884",
+          "edited": false,
+          "author_flair_css_class": null,
+          "author_flair_richtext": [],
+          "gildings": {
+
+          },
+          "content_categories": null,
+          "is_self": false,
+          "subreddit_type": "public",
+          "created": 1778753805,
+          "link_flair_type": "richtext",
+          "wls": 6,
+          "removed_by_category": null,
+          "banned_by": null,
+          "author_flair_type": "text",
+          "total_awards_received": 0,
+          "allow_live_comments": false,
+          "selftext_html": "&lt;!-- SC_OFF --&gt;&lt;div class=\"md\"&gt;&lt;p&gt;After my last post people have been asking for my before and after pics, so here u go &lt;/p&gt;\n&lt;/div&gt;&lt;!-- SC_ON --&gt;",
+          "likes": null,
+          "suggested_sort": null,
+          "banned_at_utc": null,
+          "url_overridden_by_dest": "https://www.reddit.com/gallery/1tctvan",
+          "view_count": null,
+          "archived": false,
+          "no_follow": false,
+          "is_crosspostable": true,
+          "pinned": false,
+          "over_18": false,
+          "all_awardings": [],
+          "awarders": [],
+          "media_only": false,
+          "link_flair_template_id": "6f503ef6-1d97-11eb-bf41-0ea25f805a57",
+          "can_gild": false,
+          "spoiler": false,
+          "locked": false,
+          "author_flair_text": null,
+          "treatment_tags": [],
+          "visited": false,
+          "removed_by": null,
+          "mod_note": null,
+          "distinguished": null,
+          "subreddit_id": "t5_3bw9xf",
+          "author_is_blocked": false,
+          "mod_reason_by": null,
+          "num_reports": null,
+          "removal_reason": null,
+          "link_flair_background_color": "#ea0027",
+          "id": "1tctvan",
+          "is_robot_indexable": true,
+          "report_reasons": null,
+          "author": "ArticleAny7424",
+          "discussion_type": null,
+          "num_comments": 161,
+          "send_replies": true,
+          "contest_mode": false,
+          "mod_reports": [],
+          "author_patreon_flair": false,
+          "author_flair_text_color": null,
+          "permalink": "/r/IndianHaircare/comments/1tctvan/m23_what_daily_head_massage_can_do/",
+          "stickied": false,
+          "url": "https://www.reddit.com/gallery/1tctvan",
+          "subreddit_subscribers": 154667,
+          "created_utc": 1778753805,
+          "num_crossposts": 0,
+          "media": null,
+          "is_video": false
+        }
+      }
+    ],
+    "before": null
+  }
+}
