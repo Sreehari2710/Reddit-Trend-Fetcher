@@ -100,7 +100,7 @@ Do not wrap your output in markdown code blocks like \`\`\`json. Return only the
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              model: "llama3-70b-8192",
+              model: "llama-3.3-70b-versatile",
               messages: [
                 {
                   role: "user",
