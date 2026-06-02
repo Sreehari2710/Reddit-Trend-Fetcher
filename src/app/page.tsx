@@ -127,7 +127,7 @@ export default function Dashboard() {
     }
   };
 
-  const handleGenerateParaphrase = async (e: React.FormEvent) => {
+  const handleGenerateParaphrase = async (e: React.FormEvent, isRefinement = false) => {
     e.preventDefault();
     if (!matchedPost) {
       setAiError("Please select/paste a valid post link from the fetched posts first.");
@@ -136,7 +136,21 @@ export default function Dashboard() {
 
     setIsGenerating(true);
     setAiError(null);
-    setGeneratedPost(null);
+    if (!isRefinement) {
+      setGeneratedPost(null);
+    }
+
+    const payload: any = {
+      postTitle: matchedPost.title,
+      postSelftext: matchedPost.selftext || "",
+      subreddit: subreddit || getCleanSubreddit() || "general",
+      additionalIdea: additionalIdea.trim(),
+    };
+
+    if (isRefinement && generatedPost) {
+      payload.previousTitle = generatedPost.title;
+      payload.previousBody = generatedPost.body;
+    }
 
     try {
       const response = await fetch("/api/ai/paraphrase", {
@@ -144,12 +158,7 @@ export default function Dashboard() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          postTitle: matchedPost.title,
-          postSelftext: matchedPost.selftext || "",
-          subreddit: subreddit || getCleanSubreddit() || "general",
-          additionalIdea: additionalIdea.trim(),
-        }),
+        body: JSON.stringify(payload),
       });
 
       const data = await response.json();
@@ -723,7 +732,7 @@ export default function Dashboard() {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {/* Left Column: Input Form */}
-              <form onSubmit={handleGenerateParaphrase} className="flex flex-col justify-between gap-5">
+              <form onSubmit={(e) => handleGenerateParaphrase(e, !!generatedPost)} className="flex flex-col justify-between gap-5">
                 <div className="flex flex-col gap-4">
                   {/* Link Input */}
                   <div className="flex flex-col gap-2">
@@ -764,23 +773,44 @@ export default function Dashboard() {
                   </div>
                 </div>
 
-                <button
-                  type="submit"
-                  disabled={isGenerating || !matchedPost}
-                  className="w-full bg-slate-100 hover:bg-white text-slate-950 font-bold py-2.5 rounded-lg text-xs font-mono uppercase tracking-wider transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-4 shadow cursor-pointer"
-                >
-                  {isGenerating ? (
-                    <>
-                      <svg className="animate-spin h-3.5 w-3.5 text-slate-950" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                      </svg>
-                      Paraphrasing with AI...
-                    </>
-                  ) : (
-                    "Generate Paraphrased Post"
-                  )}
-                </button>
+                {generatedPost ? (
+                  <div className="grid grid-cols-2 gap-4 mt-4">
+                    <button
+                      type="button"
+                      onClick={(e) => handleGenerateParaphrase(e, true)}
+                      disabled={isGenerating || !matchedPost}
+                      className="w-full bg-slate-100 hover:bg-white text-slate-950 font-bold py-2.5 rounded-lg text-xs font-mono uppercase tracking-wider transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow cursor-pointer"
+                    >
+                      {isGenerating ? "Refining..." : "Regenerate"}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={(e) => handleGenerateParaphrase(e, false)}
+                      disabled={isGenerating || !matchedPost}
+                      className="w-full border border-slate-850 hover:border-slate-700 bg-slate-900/40 hover:bg-slate-900/80 text-slate-300 font-bold py-2.5 rounded-lg text-xs font-mono uppercase tracking-wider transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow cursor-pointer"
+                    >
+                      Start Fresh
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    type="submit"
+                    disabled={isGenerating || !matchedPost}
+                    className="w-full bg-slate-100 hover:bg-white text-slate-950 font-bold py-2.5 rounded-lg text-xs font-mono uppercase tracking-wider transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-4 shadow cursor-pointer"
+                  >
+                    {isGenerating ? (
+                      <>
+                        <svg className="animate-spin h-3.5 w-3.5 text-slate-950" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                        </svg>
+                        Paraphrasing with AI...
+                      </>
+                    ) : (
+                      "Generate Paraphrased Post"
+                    )}
+                  </button>
+                )}
               </form>
 
               {/* Right Column: AI Output */}
