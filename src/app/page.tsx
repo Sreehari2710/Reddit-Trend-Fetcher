@@ -13,6 +13,7 @@ interface Post {
   thumbnail: string | null;
   url: string;
   nsfw: boolean;
+  selftext?: string;
 }
 
 // Helpers for metric abbreviations
@@ -75,6 +76,118 @@ export default function Dashboard() {
 
   const toggleNsfwReveal = (id: string) => {
     setRevealedNsfw((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
+
+  // AI Paraphraser state
+  const [aiPostLink, setAiPostLink] = useState("");
+  const [additionalIdea, setAdditionalIdea] = useState("");
+  const [generatedPost, setGeneratedPost] = useState<{ title: string; body: string } | null>(null);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [aiError, setAiError] = useState<string | null>(null);
+  const [matchedPost, setMatchedPost] = useState<Post | null>(null);
+
+  const [copiedTitle, setCopiedTitle] = useState(false);
+  const [copiedBody, setCopiedBody] = useState(false);
+
+  // Helper to match post from link
+  const findMatchedPost = (urlOrLink: string, currentPosts: Post[] | null): Post | null => {
+    if (!currentPosts || !urlOrLink.trim()) return null;
+    const cleanUrl = urlOrLink.trim().toLowerCase();
+    
+    return currentPosts.find((post) => {
+      const postUrl = post.url.toLowerCase();
+      // Match by exact URL, relative permalink, or check if the post ID is in the URL
+      return (
+        postUrl === cleanUrl ||
+        postUrl.includes(cleanUrl) ||
+        cleanUrl.includes(postUrl) ||
+        cleanUrl.includes(post.id.toLowerCase())
+      );
+    }) || null;
+  };
+
+  const handleLinkChange = (linkValue: string) => {
+    setAiPostLink(linkValue);
+    const matched = findMatchedPost(linkValue, posts);
+    setMatchedPost(matched);
+    if (matched) {
+      setAiError(null);
+    }
+  };
+
+  const handleSelectPostForParaphrase = (post: Post) => {
+    setAiPostLink(post.url);
+    setMatchedPost(post);
+    setAiError(null);
+    
+    // Scroll the AI workspace into view
+    const aiSection = document.getElementById("ai-workspace");
+    if (aiSection) {
+      aiSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const handleGenerateParaphrase = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!matchedPost) {
+      setAiError("Please select/paste a valid post link from the fetched posts first.");
+      return;
+    }
+
+    setIsGenerating(true);
+    setAiError(null);
+    setGeneratedPost(null);
+
+    try {
+      const response = await fetch("/api/ai/paraphrase", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          postTitle: matchedPost.title,
+          postSelftext: matchedPost.selftext || "",
+          subreddit: subreddit || getCleanSubreddit() || "general",
+          additionalIdea: additionalIdea.trim(),
+        }),
+      });
+
+      const data = await response.json();
+      if (!response.ok || !data.success) {
+        throw new Error(data.message || "Failed to generate paraphrased post.");
+      }
+
+      setGeneratedPost({
+        title: data.title,
+        body: data.body,
+      });
+    } catch (err: any) {
+      console.error("Paraphrase generation failed:", err);
+      setAiError(err.message || "Something went wrong while generating the paraphrased post.");
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
+  const handleCopyTitle = () => {
+    if (!generatedPost) return;
+    navigator.clipboard.writeText(generatedPost.title);
+    setCopiedTitle(true);
+    setTimeout(() => setCopiedTitle(false), 2000);
+  };
+
+  const handleCopyBody = () => {
+    if (!generatedPost) return;
+    navigator.clipboard.writeText(generatedPost.body);
+    setCopiedBody(true);
+    setTimeout(() => setCopiedBody(false), 2000);
+  };
+
+  const handleCopyFull = () => {
+    if (!generatedPost) return;
+    navigator.clipboard.writeText(`Title: ${generatedPost.title}\n\n${generatedPost.body}`);
+    setCopiedBody(true);
+    setTimeout(() => setCopiedBody(false), 2000);
   };
 
   // Clean and sanitize subreddit parameter
@@ -190,6 +303,7 @@ export default function Dashboard() {
             thumbnail: cleanThumbnail,
             url: threadUrl,
             nsfw: !!data.over_18,
+            selftext: data.selftext || "",
           };
         });
 
@@ -571,22 +685,173 @@ export default function Dashboard() {
                     </span>
                   </div>
 
-                  {/* Actions link */}
-                  <a
-                    href={post.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-1 font-bold text-orange-500 hover:text-orange-400 transition-all focus:outline-none"
-                  >
-                    OPEN THREAD
-                    <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                    </svg>
-                  </a>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => handleSelectPostForParaphrase(post)}
+                      className="flex items-center gap-1 font-bold text-orange-500 hover:text-orange-400 transition-all focus:outline-none cursor-pointer"
+                    >
+                      🪄 PARAPHRASE
+                    </button>
+                    <span className="text-slate-800">|</span>
+                    <a
+                      href={post.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-1 text-slate-500 hover:text-slate-355 transition-all focus:outline-none"
+                    >
+                      OPEN
+                      <svg className="w-3.5 h-3.5 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      </svg>
+                    </a>
+                  </div>
                 </div>
               </article>
             ))}
           </div>
+        )}
+
+        {/* AI Workspace Section */}
+        {posts && (
+          <section id="ai-workspace" className="mt-16 bg-slate-900/40 border border-slate-900 rounded-xl p-6 shadow-sm scroll-mt-24">
+            <div className="flex items-center gap-2 mb-6 border-b border-slate-900 pb-4">
+              <span className="w-6 h-6 rounded bg-orange-600/10 text-orange-500 text-xs font-bold flex items-center justify-center font-mono border border-orange-500/20">🪄</span>
+              <h2 className="font-bold text-sm uppercase tracking-wider text-slate-100 font-mono">
+                AI Post Paraphraser Workspace
+              </h2>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {/* Left Column: Input Form */}
+              <form onSubmit={handleGenerateParaphrase} className="flex flex-col justify-between gap-5">
+                <div className="flex flex-col gap-4">
+                  {/* Link Input */}
+                  <div className="flex flex-col gap-2">
+                    <label htmlFor="ai-link" className="text-[10px] font-bold uppercase tracking-widest text-slate-500 font-mono">
+                      Selected Post URL / Link
+                    </label>
+                    <input
+                      id="ai-link"
+                      type="text"
+                      placeholder="Paste the post URL link here (or click PARAPHRASE on a card above)..."
+                      value={aiPostLink}
+                      onChange={(e) => handleLinkChange(e.target.value)}
+                      className="w-full bg-slate-950 border border-slate-850 rounded-lg py-2.5 px-3.5 text-xs text-slate-100 focus:outline-none focus:ring-1 focus:ring-orange-500 focus:border-orange-500 font-mono"
+                    />
+                    {matchedPost ? (
+                      <p className="text-[10px] text-emerald-450 font-mono flex items-center gap-1 mt-1">
+                        <span>✅</span> Matched: "{matchedPost.title.substring(0, 60)}{matchedPost.title.length > 60 ? '...' : ''}"
+                      </p>
+                    ) : aiPostLink.trim() ? (
+                      <p className="text-[10px] text-amber-500 font-mono mt-1">
+                        ⚠️ No matching post found in the loaded results. Make sure the URL belongs to a post in the list above.
+                      </p>
+                    ) : null}
+                  </div>
+
+                  {/* Custom Angle / Ideas Input */}
+                  <div className="flex flex-col gap-2">
+                    <label htmlFor="ai-idea" className="text-[10px] font-bold uppercase tracking-widest text-slate-500 font-mono">
+                      Add Custom Angle / New Idea (Optional)
+                    </label>
+                    <textarea
+                      id="ai-idea"
+                      placeholder="e.g. rewrite this post for a SaaS audience, make it more punchy, or add a joke about coding..."
+                      value={additionalIdea}
+                      onChange={(e) => setAdditionalIdea(e.target.value)}
+                      className="w-full h-28 bg-slate-950 border border-slate-850 rounded-lg p-3 text-xs text-slate-300 focus:outline-none focus:border-slate-800 font-mono resize-none placeholder-slate-700"
+                    />
+                  </div>
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={isGenerating || !matchedPost}
+                  className="w-full bg-slate-100 hover:bg-white text-slate-950 font-bold py-2.5 rounded-lg text-xs font-mono uppercase tracking-wider transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-4 shadow cursor-pointer"
+                >
+                  {isGenerating ? (
+                    <>
+                      <svg className="animate-spin h-3.5 w-3.5 text-slate-950" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                      </svg>
+                      Paraphrasing with AI...
+                    </>
+                  ) : (
+                    "Generate Paraphrased Post"
+                  )}
+                </button>
+              </form>
+
+              {/* Right Column: AI Output */}
+              <div className="bg-slate-950/60 border border-slate-900 rounded-xl p-5 flex flex-col justify-between min-h-[300px]">
+                {generatedPost ? (
+                  <div className="flex flex-col justify-between h-full gap-5">
+                    <div>
+                      {/* Generated Title Header */}
+                      <div className="flex items-center justify-between gap-2 mb-3 pb-2 border-b border-slate-900">
+                        <span className="text-[9px] font-bold uppercase tracking-widest text-orange-500 font-mono">Generated Title</span>
+                        <button
+                          onClick={handleCopyTitle}
+                          className="text-[10px] text-slate-500 hover:text-slate-200 font-mono uppercase flex items-center gap-1 cursor-pointer"
+                        >
+                          {copiedTitle ? "[Copied!]" : "[Copy Title]"}
+                        </button>
+                      </div>
+                      <h3 className="font-bold text-sm text-slate-200 font-sans mb-5 leading-snug">
+                        {generatedPost.title}
+                      </h3>
+
+                      {/* Generated Body Header */}
+                      <div className="flex items-center justify-between gap-2 mb-3 pb-2 border-b border-slate-900">
+                        <span className="text-[9px] font-bold uppercase tracking-widest text-orange-500 font-mono">Generated Content</span>
+                        <button
+                          onClick={handleCopyBody}
+                          className="text-[10px] text-slate-500 hover:text-slate-200 font-mono uppercase flex items-center gap-1 cursor-pointer"
+                        >
+                          {copiedBody ? "[Copied!]" : "[Copy Content]"}
+                        </button>
+                      </div>
+                      <p className="text-xs text-slate-350 font-sans leading-relaxed whitespace-pre-wrap">
+                        {generatedPost.body}
+                      </p>
+                    </div>
+
+                    <button
+                      onClick={handleCopyFull}
+                      className="w-full border border-slate-900 hover:border-slate-800 bg-slate-900/30 hover:bg-slate-900/60 text-slate-300 font-mono text-[10px] py-2 rounded-lg uppercase tracking-wider flex items-center justify-center gap-2 mt-4 cursor-pointer"
+                    >
+                      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+                      </svg>
+                      Copy Full Title & Post
+                    </button>
+                  </div>
+                ) : (
+                  <div className="flex flex-col items-center justify-center h-full text-center py-10">
+                    <div className="w-10 h-10 rounded bg-slate-900 border border-slate-850 flex items-center justify-center text-slate-500 mb-4">
+                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                      </svg>
+                    </div>
+                    {aiError ? (
+                      <div className="text-red-400 font-mono text-xs max-w-sm">
+                        <p className="font-bold uppercase text-[9px] tracking-wider text-red-500">Error Generating</p>
+                        <p className="mt-1.5 text-red-300/80 leading-relaxed">{aiError}</p>
+                      </div>
+                    ) : (
+                      <>
+                        <h4 className="font-bold text-xs text-slate-400 uppercase tracking-wider font-mono">Waiting for input</h4>
+                        <p className="text-[10px] text-slate-500 mt-2 max-w-[240px] leading-relaxed font-mono">
+                          Select a post from the list above, add your custom angle, and click generate to create a new similar post.
+                        </p>
+                      </>
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
+          </section>
         )}
 
         {/* Empty Search Landing Page State */}
