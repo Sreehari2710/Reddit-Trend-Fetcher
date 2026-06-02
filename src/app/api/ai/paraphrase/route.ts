@@ -63,21 +63,37 @@ Do not wrap your output in markdown code blocks like \`\`\`json. Return only the
     const geminiKey = process.env.GEMINI_API_KEY;
     if (geminiKey) {
       try {
-        console.log("Attempting generation with Gemini...");
-        const ai = new GoogleGenAI({ apiKey: geminiKey });
-        const response = await ai.models.generateContent({
-          model: "gemini-3.5-flash",
-          contents: prompt,
-          config: {
-            responseMimeType: "application/json",
-          },
-        });
+        console.log("Attempting generation with Gemini (REST API)...");
+        const response = await fetch(
+          `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiKey}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              contents: [{ parts: [{ text: prompt }] }],
+              generationConfig: {
+                responseMimeType: "application/json",
+              },
+            }),
+            signal: AbortSignal.timeout(8000), // 8 seconds timeout
+          }
+        );
 
-        const responseText = response.text;
+        if (!response.ok) {
+          const errText = await response.text();
+          throw new Error(`Gemini HTTP error! status: ${response.status}, body: ${errText}`);
+        }
+
+        const data = await response.json();
+        const responseText = data.candidates?.[0]?.content?.parts?.[0]?.text;
         if (responseText) {
           result = JSON.parse(responseText.trim());
           success = true;
           console.log("Generation with Gemini succeeded.");
+        } else {
+          throw new Error("Empty text returned from Gemini API.");
         }
       } catch (err: any) {
         console.error("Gemini API attempt failed:", err);
@@ -109,6 +125,7 @@ Do not wrap your output in markdown code blocks like \`\`\`json. Return only the
               ],
               response_format: { type: "json_object" },
             }),
+            signal: AbortSignal.timeout(8000), // 8 seconds timeout
           });
 
           if (!groqResponse.ok) {
