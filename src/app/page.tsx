@@ -55,6 +55,50 @@ function cleanRedditUrl(url: string | null | undefined): string | null {
   return url.replace(/&amp;/g, "&");
 }
 
+// Helper to render basic markdown bold & bullet lists in UI
+function renderMarkdown(text: string) {
+  if (!text) return null;
+  
+  const lines = text.split("\n");
+  
+  return lines.map((line, index) => {
+    let trimmed = line.trim();
+    if (!trimmed) {
+      return <div key={index} className="h-2" />;
+    }
+    
+    // Check if it's a bullet point
+    const isBullet = trimmed.startsWith("* ") || trimmed.startsWith("- ") || trimmed.startsWith("• ");
+    if (isBullet) {
+      trimmed = trimmed.substring(2).trim();
+    }
+    
+    // Parse bold segments (**bold**)
+    const parts = trimmed.split(/(\*\*.*?\*\*)/g);
+    const content = parts.map((part, partIndex) => {
+      if (part.startsWith("**") && part.endsWith("**")) {
+        return <strong key={partIndex} className="font-bold text-slate-100">{part.slice(2, -2)}</strong>;
+      }
+      return part;
+    });
+    
+    if (isBullet) {
+      return (
+        <div key={index} className="flex gap-2 pl-2 my-1 items-start text-xs text-slate-300 font-sans">
+          <span className="text-orange-500">•</span>
+          <span>{content}</span>
+        </div>
+      );
+    }
+    
+    return (
+      <p key={index} className="my-1 text-xs text-slate-350 font-sans leading-relaxed">
+        {content}
+      </p>
+    );
+  });
+}
+
 export default function Dashboard() {
   // Input parameters
   const [subreddit, setSubreddit] = useState("");
@@ -842,9 +886,9 @@ export default function Dashboard() {
                           {copiedBody ? "[Copied!]" : "[Copy Content]"}
                         </button>
                       </div>
-                      <p className="text-xs text-slate-350 font-sans leading-relaxed whitespace-pre-wrap">
-                        {generatedPost.body}
-                      </p>
+                      <div className="space-y-1">
+                        {renderMarkdown(generatedPost.body)}
+                      </div>
                     </div>
 
                     <button
