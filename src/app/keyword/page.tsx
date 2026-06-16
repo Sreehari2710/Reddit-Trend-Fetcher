@@ -1,38 +1,40 @@
 "use client";
 
-import React, { useEffect, useState, useTransition } from "react";
-import { Post, formatNumber, getRelativeTime, cleanRedditUrl, renderMarkdown } from "@/lib/utils";
+import React, { useState, useTransition } from "react";
+import { formatNumber, getRelativeTime, cleanRedditUrl, renderMarkdown } from "@/lib/utils";
 
-export default function PostsPage() {
-  // Input parameters
-  const [subreddit, setSubreddit] = useState("");
+// Post schema for keyword search results — same shape as the subreddit posts feed,
+// plus the originating subreddit name since results span multiple communities.
+interface KeywordPost {
+  id: string;
+  title: string;
+  subreddit: string;
+  author: string;
+  upvotes: number;
+  comments: number;
+  posted_at: string;
+  thumbnail: string | null;
+  url: string;
+  nsfw: boolean;
+  selftext?: string;
+}
 
-  // Prefill from ?subreddit= when arriving via "Use This" on the Discover Subreddits page.
-  // Plain window.location read (not useSearchParams) so this doesn't need a Suspense boundary.
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const fromQuery = params.get("subreddit");
-    if (fromQuery) {
-      setSubreddit(fromQuery);
-      window.history.replaceState(null, "", window.location.pathname);
-    }
-  }, []);
+export default function KeywordSearchPage() {
+  // Input parameters. Per spec, only "keyword" is required — timeframe, sort, and
+  // limit are optional and simply omitted from the request URL when left unset,
+  // letting Reddit apply its own defaults (relevance sort, all-time, ~25 results).
+  const [keyword, setKeyword] = useState("");
   const [timeframe, setTimeframe] = useState("");
   const [sort, setSort] = useState("");
   const [limit, setLimit] = useState("");
 
-  // Raw pasted JSON text
   const [rawJson, setRawJson] = useState("");
-
-  // Cleaned post data & state hooks
-  const [posts, setPosts] = useState<Post[] | null>(null);
+  const [posts, setPosts] = useState<KeywordPost[] | null>(null);
   const [totalPosts, setTotalPosts] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
-  // Track revealed NSFW blurred thumbnails
   const [revealedNsfw, setRevealedNsfw] = useState<Record<string, boolean>>({});
-
   const toggleNsfwReveal = (id: string) => {
     setRevealedNsfw((prev) => ({ ...prev, [id]: !prev[id] }));
   };
@@ -43,19 +45,18 @@ export default function PostsPage() {
   const [generatedPost, setGeneratedPost] = useState<{ title: string; body: string } | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [aiError, setAiError] = useState<string | null>(null);
-  const [matchedPost, setMatchedPost] = useState<Post | null>(null);
+  const [matchedPost, setMatchedPost] = useState<KeywordPost | null>(null);
 
   const [copiedTitle, setCopiedTitle] = useState(false);
   const [copiedBody, setCopiedBody] = useState(false);
 
   // Helper to match post from link
-  const findMatchedPost = (urlOrLink: string, currentPosts: Post[] | null): Post | null => {
+  const findMatchedPost = (urlOrLink: string, currentPosts: KeywordPost[] | null): KeywordPost | null => {
     if (!currentPosts || !urlOrLink.trim()) return null;
     const cleanUrl = urlOrLink.trim().toLowerCase();
 
     return currentPosts.find((post) => {
       const postUrl = post.url.toLowerCase();
-      // Match by exact URL, relative permalink, or check if the post ID is in the URL
       return (
         postUrl === cleanUrl ||
         postUrl.includes(cleanUrl) ||
@@ -74,12 +75,11 @@ export default function PostsPage() {
     }
   };
 
-  const handleSelectPostForParaphrase = (post: Post) => {
+  const handleSelectPostForParaphrase = (post: KeywordPost) => {
     setAiPostLink(post.url);
     setMatchedPost(post);
     setAiError(null);
 
-    // Scroll the AI workspace into view
     const aiSection = document.getElementById("ai-workspace");
     if (aiSection) {
       aiSection.scrollIntoView({ behavior: "smooth" });
@@ -102,7 +102,7 @@ export default function PostsPage() {
     const payload: any = {
       postTitle: matchedPost.title,
       postSelftext: matchedPost.selftext || "",
-      subreddit: subreddit || getCleanSubreddit() || "general",
+      subreddit: matchedPost.subreddit || "general",
       additionalIdea: additionalIdea.trim(),
     };
 
@@ -158,43 +158,22 @@ export default function PostsPage() {
     setTimeout(() => setCopiedBody(false), 2000);
   };
 
-  // Clean and sanitize subreddit parameter
-  const getCleanSubreddit = () => {
-    let sub = subreddit.trim().toLowerCase();
-    if (sub.startsWith("/r/")) {
-      sub = sub.substring(3);
-    } else if (sub.startsWith("r/")) {
-      sub = sub.substring(2);
-    }
-    if (sub.endsWith("/")) {
-      sub = sub.substring(0, sub.length - 1);
-    }
-    return sub;
-  };
+  const cleanKeyword = keyword.trim();
 
-  // Construct target Reddit JSON endpoint dynamically
-  const cleanSub = getCleanSubreddit();
-  const apiTimeframe = timeframe === "6months" ? "year" : timeframe;
-  const apiLimit = timeframe === "6months" ? "100" : limit;
-  const targetUrl = cleanSub && sort && apiTimeframe && apiLimit
-    ? `https://www.reddit.com/r/${cleanSub}/${sort}.json?t=${apiTimeframe}&limit=${apiLimit}`
-    : "";
+  // Construct target Reddit search endpoint. Optional params are appended only when set.
+  const targetUrl = (() => {
+    if (!cleanKeyword) return "";
+    const params = new URLSearchParams();
+    params.set("q", cleanKeyword);
+    if (sort) params.set("sort", sort);
+    if (timeframe) params.set("t", timeframe);
+    if (limit) params.set("limit", limit);
+    return `https://www.reddit.com/search.json?${params.toString()}`;
+  })();
 
   const handleOpenReddit = () => {
-    if (!subreddit.trim()) {
-      setError("Please enter a valid subreddit name first.");
-      return;
-    }
-    if (!timeframe) {
-      setError("Please select a time interval first.");
-      return;
-    }
-    if (!sort) {
-      setError("Please select a metrics sorting option first.");
-      return;
-    }
-    if (!limit) {
-      setError("Please select a post count limit first.");
+    if (!cleanKeyword) {
+      setError("Please enter a keyword to search first.");
       return;
     }
     setError(null);
@@ -204,28 +183,14 @@ export default function PostsPage() {
   // Client-side JSON parsing and sanitization logic
   const handleParseAndDisplay = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!subreddit.trim()) {
-      setError("Please enter a valid subreddit name first.");
-      return;
-    }
-    if (!timeframe) {
-      setError("Please select a time interval first.");
-      return;
-    }
-    if (!sort) {
-      setError("Please select a metrics sorting option first.");
-      return;
-    }
-    if (!limit) {
-      setError("Please select a post count limit first.");
+    if (!cleanKeyword) {
+      setError("Please enter a keyword to search first.");
       return;
     }
     if (!rawJson.trim()) {
       setError("Please paste the copied Reddit JSON payload into the text area below.");
       return;
     }
-
-    // Protection against excessive client-side memory usage / freezing
     if (rawJson.length > 2 * 1024 * 1024) {
       setError("Pasted JSON is too large (maximum 2MB allowed).");
       return;
@@ -237,57 +202,44 @@ export default function PostsPage() {
       try {
         const rawData = JSON.parse(rawJson);
 
-        // Validate GFM / Reddit Listing format integrity
         if (!rawData || rawData.kind !== "Listing" || !rawData.data || !Array.isArray(rawData.data.children)) {
           throw new Error("Invalid structure. The text doesn't look like a complete Reddit JSON Listing feed.");
         }
 
-        const children = rawData.data.children;
+        const postsLimit = limit ? parseInt(limit, 10) : rawData.data.children.length;
 
-        // Filter by 6 months if selected
-        let filteredChildren = children;
-        if (timeframe === "6months") {
-          const cutoff = new Date();
-          cutoff.setMonth(cutoff.getMonth() - 6);
-          const cutoffTime = cutoff.getTime();
-          filteredChildren = children.filter((child: any) => {
-            const createdUtc = child.data?.created_utc;
-            return createdUtc ? (createdUtc * 1000 >= cutoffTime) : false;
+        const mappedPosts: KeywordPost[] = rawData.data.children
+          .filter((child: any) => child.kind === "t3")
+          .slice(0, postsLimit)
+          .map((child: any) => {
+            const data = child.data || {};
+
+            const rawThumbnail = data.thumbnail;
+            const cleanThumbnail = cleanRedditUrl(rawThumbnail);
+
+            const permalink = typeof data.permalink === "string" ? data.permalink : "";
+            // Secure validation to ensure permalink is relative, avoiding malicious redirections / open redirects
+            const isSafePermalink = /^\/[a-zA-Z0-9_]/.test(permalink) && !permalink.includes("//");
+            const threadUrl = isSafePermalink ? `https://www.reddit.com${permalink}` : "https://www.reddit.com";
+
+            return {
+              id: data.id || Math.random().toString(36).substring(7),
+              title: data.title || "Untitled",
+              subreddit: data.subreddit || "unknown",
+              author: data.author || "anonymous",
+              upvotes: typeof data.score === "number" ? data.score : (data.ups || 0),
+              comments: typeof data.num_comments === "number" ? data.num_comments : 0,
+              posted_at: data.created_utc ? new Date(data.created_utc * 1000).toISOString() : new Date().toISOString(),
+              thumbnail: cleanThumbnail,
+              url: threadUrl,
+              nsfw: !!data.over_18,
+              selftext: data.selftext || "",
+            };
           });
-        }
-
-        const postsLimit = parseInt(limit, 10);
-
-        const mappedPosts: Post[] = filteredChildren.slice(0, postsLimit).map((child: any) => {
-          const data = child.data || {};
-
-          const rawThumbnail = data.thumbnail;
-          const cleanThumbnail = cleanRedditUrl(rawThumbnail);
-
-          const permalink = typeof data.permalink === "string" ? data.permalink : "";
-          // Secure validation to ensure permalink is relative, avoiding malicious redirections / open redirects
-          const isSafePermalink = /^\/[a-zA-Z0-9_]/.test(permalink) && !permalink.includes("//");
-          const threadUrl = isSafePermalink ? `https://www.reddit.com${permalink}` : "https://www.reddit.com";
-
-          return {
-            id: data.id || Math.random().toString(36).substring(7),
-            title: data.title || "Untitled",
-            author: data.author || "anonymous",
-            upvotes: typeof data.score === "number" ? data.score : (data.ups || 0),
-            comments: typeof data.num_comments === "number" ? data.num_comments : 0,
-            posted_at: data.created_utc ? new Date(data.created_utc * 1000).toISOString() : new Date().toISOString(),
-            thumbnail: cleanThumbnail,
-            url: threadUrl,
-            nsfw: !!data.over_18,
-            selftext: data.selftext || "",
-          };
-        });
 
         setPosts(mappedPosts);
         setTotalPosts(mappedPosts.length);
         setError(null);
-
-        // Optionally clear the textarea for clean visual state
         setRawJson("");
       } catch (err: any) {
         console.error("JSON Parsing failed:", err);
@@ -301,10 +253,8 @@ export default function PostsPage() {
   const handleExportCSV = () => {
     if (!posts || posts.length === 0) return;
 
-    // Header fields
-    const headers = ["ID", "Title", "Author", "Upvotes", "Comments", "Posted At", "NSFW", "Thread URL"];
+    const headers = ["ID", "Title", "Subreddit", "Author", "Upvotes", "Comments", "Posted At", "NSFW", "Thread URL"];
 
-    // Build rows safely escaping strings containing double quotes or commas
     const rows = posts.map((post) => {
       const cleanTitle = post.title.replace(/"/g, '""');
       const cleanAuthor = post.author.replace(/"/g, '""');
@@ -312,6 +262,7 @@ export default function PostsPage() {
       return [
         `"${post.id}"`,
         `"${cleanTitle}"`,
+        `"${post.subreddit}"`,
         `"${cleanAuthor}"`,
         post.upvotes,
         post.comments,
@@ -327,7 +278,7 @@ export default function PostsPage() {
     const link = document.createElement("a");
 
     link.setAttribute("href", url);
-    link.setAttribute("download", `${getCleanSubreddit()}_trends_report.csv`);
+    link.setAttribute("download", `${cleanKeyword.replace(/\s+/g, "_") || "keyword"}_search_report.csv`);
     link.style.visibility = "hidden";
     document.body.appendChild(link);
     link.click();
@@ -336,93 +287,88 @@ export default function PostsPage() {
 
   return (
     <div className="pb-24">
-      {/* Main Container */}
       <main className="max-w-7xl mx-auto px-6 py-12">
 
-        {/* Title Section (Minimalistic and structured typography) */}
-        <div className="mb-12 border-l-2 border-orange-600 pl-5">
+        {/* Title Section */}
+        <div className="mb-12 border-l-2 border-purple-500 pl-5">
           <h1 className="text-3xl font-bold tracking-tight text-slate-100 uppercase font-mono">
-            Subreddit Engagement Analytics
+            Search Posts By Keyword
           </h1>
           <p className="mt-2 text-sm text-slate-400 max-w-3xl">
-            A precise, serverless data extraction toolkit designed to clean, sort, and visualize community post metrics.
+            Search across all of Reddit for a keyword or phrase, regardless of subreddit, sorted and filtered the way you choose.
           </p>
         </div>
 
-        {/* Structured Grid Form Panel (Sharp, border-defined inputs) */}
-        <section id="main-toolbar" className="mb-6 bg-slate-900/60 border border-slate-900 rounded-xl p-5 shadow-sm scroll-mt-24">
+        {/* Structured Grid Form Panel */}
+        <section className="mb-6 bg-slate-900/60 border border-slate-900 rounded-xl p-5 shadow-sm">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-5 items-end">
 
-            {/* Subreddit Input */}
+            {/* Keyword Input */}
             <div className="flex flex-col gap-2">
-              <label htmlFor="sub" className="text-[10px] font-bold uppercase tracking-widest text-slate-500 font-mono">
-                Subreddit Name
+              <label htmlFor="keyword" className="text-[10px] font-bold uppercase tracking-widest text-slate-500 font-mono">
+                Keyword <span className="text-purple-500">*</span>
               </label>
-              <div className="relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600 text-xs font-mono">r/</span>
-                <input
-                  id="sub"
-                  type="text"
-                  placeholder="technology"
-                  value={subreddit}
-                  onChange={(e) => setSubreddit(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-850 rounded-lg py-2.5 pl-7 pr-3 text-xs text-slate-100 focus:outline-none focus:ring-1 focus:ring-orange-500 focus:border-orange-500 font-mono"
-                />
-              </div>
+              <input
+                id="keyword"
+                type="text"
+                placeholder="dandruff india"
+                value={keyword}
+                onChange={(e) => setKeyword(e.target.value)}
+                className="w-full bg-slate-950 border border-slate-850 rounded-lg py-2.5 px-3 text-xs text-slate-100 focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 font-mono"
+              />
             </div>
 
-            {/* Timeframe Select */}
+            {/* Timeframe Select (optional) */}
             <div className="flex flex-col gap-2">
-              <label htmlFor="time" className="text-[10px] font-bold uppercase tracking-widest text-slate-500 font-mono">
-                Time Interval
+              <label htmlFor="kw-time" className="text-[10px] font-bold uppercase tracking-widest text-slate-500 font-mono">
+                Time Interval <span className="text-slate-600">(optional)</span>
               </label>
               <select
-                id="time"
+                id="kw-time"
                 value={timeframe}
                 onChange={(e) => setTimeframe(e.target.value)}
-                className="w-full bg-slate-950 border border-slate-850 rounded-lg py-2.5 px-3 text-xs text-slate-200 focus:outline-none focus:ring-1 focus:ring-orange-500 focus:border-orange-500 font-mono cursor-pointer"
+                className="w-full bg-slate-950 border border-slate-850 rounded-lg py-2.5 px-3 text-xs text-slate-200 focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 font-mono cursor-pointer"
               >
-                <option value="" disabled>-- Select Timeframe --</option>
+                <option value="">Default (All Time)</option>
                 <option value="day">Last 24 Hours</option>
                 <option value="week">Last Week</option>
                 <option value="month">Last Month</option>
-                <option value="6months">Last 6 Months</option>
                 <option value="year">Last Year</option>
                 <option value="all">All Time</option>
               </select>
             </div>
 
-            {/* Sort order select */}
+            {/* Sort Select (optional) */}
             <div className="flex flex-col gap-2">
-              <label htmlFor="sort-by" className="text-[10px] font-bold uppercase tracking-widest text-slate-500 font-mono">
-                Metrics Sorting
+              <label htmlFor="kw-sort" className="text-[10px] font-bold uppercase tracking-widest text-slate-500 font-mono">
+                Sort By <span className="text-slate-600">(optional)</span>
               </label>
               <select
-                id="sort-by"
+                id="kw-sort"
                 value={sort}
                 onChange={(e) => setSort(e.target.value)}
-                className="w-full bg-slate-950 border border-slate-850 rounded-lg py-2.5 px-3 text-xs text-slate-200 focus:outline-none focus:ring-1 focus:ring-orange-500 focus:border-orange-500 font-mono cursor-pointer"
+                className="w-full bg-slate-950 border border-slate-850 rounded-lg py-2.5 px-3 text-xs text-slate-200 focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 font-mono cursor-pointer"
               >
-                <option value="" disabled>-- Select Sort --</option>
-                <option value="top">Top Upvoted</option>
-                <option value="hot">Hot (Trending)</option>
-                <option value="new">Newest Posts</option>
-                <option value="rising">Rising Activity</option>
+                <option value="">Default (Relevance)</option>
+                <option value="relevance">Most Relevant</option>
+                <option value="top">Most Upvoted</option>
+                <option value="new">Most Recent</option>
+                <option value="comments">Most Discussed</option>
               </select>
             </div>
 
-            {/* Limit select */}
+            {/* Limit Select (optional) */}
             <div className="flex flex-col gap-2">
-              <label htmlFor="limit" className="text-[10px] font-bold uppercase tracking-widest text-slate-500 font-mono">
-                Post Count Limit
+              <label htmlFor="kw-limit" className="text-[10px] font-bold uppercase tracking-widest text-slate-500 font-mono">
+                Post Count Limit <span className="text-slate-600">(optional)</span>
               </label>
               <select
-                id="limit"
+                id="kw-limit"
                 value={limit}
                 onChange={(e) => setLimit(e.target.value)}
-                className="w-full bg-slate-950 border border-slate-850 rounded-lg py-2.5 px-3 text-xs text-slate-200 focus:outline-none focus:ring-1 focus:ring-orange-500 focus:border-orange-500 font-mono cursor-pointer"
+                className="w-full bg-slate-950 border border-slate-850 rounded-lg py-2.5 px-3 text-xs text-slate-200 focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 font-mono cursor-pointer"
               >
-                <option value="" disabled>-- Select Limit --</option>
+                <option value="">Default (~25)</option>
                 <option value="5">5 Posts</option>
                 <option value="10">10 Posts</option>
                 <option value="20">20 Posts</option>
@@ -434,18 +380,18 @@ export default function PostsPage() {
           </div>
         </section>
 
-        {/* Action board: Sharp column-grid partitions */}
+        {/* Action board */}
         <section className="grid grid-cols-1 lg:grid-cols-5 gap-5 mb-8">
 
           {/* Step 1: Link Retrieval */}
           <div className="lg:col-span-2 bg-slate-900/40 border border-slate-900 rounded-xl p-5 flex flex-col justify-between">
             <div>
               <div className="flex items-center gap-2 mb-3.5">
-                <span className="w-5 h-5 rounded bg-orange-600/10 text-orange-500 text-[10px] font-bold flex items-center justify-center font-mono border border-orange-500/20">01</span>
-                <h3 className="font-bold text-xs uppercase tracking-wider text-slate-200 font-mono">Open API Feed</h3>
+                <span className="w-5 h-5 rounded bg-purple-600/10 text-purple-400 text-[10px] font-bold flex items-center justify-center font-mono border border-purple-500/20">01</span>
+                <h3 className="font-bold text-xs uppercase tracking-wider text-slate-200 font-mono">Open Search Feed</h3>
               </div>
               <p className="text-xs text-slate-400 leading-relaxed mb-4">
-                Retrieve the Reddit raw JSON feed for <code className="text-slate-300 font-mono">r/{cleanSub || "subreddit"}</code>. Copy the raw page using <kbd className="bg-slate-950 px-1 py-0.5 rounded text-[10px] border border-slate-850">Ctrl+A</kbd> and <kbd className="bg-slate-950 px-1 py-0.5 rounded text-[10px] border border-slate-850">Ctrl+C</kbd>.
+                Retrieve Reddit's raw JSON search results for <code className="text-slate-300 font-mono">"{cleanKeyword || "keyword"}"</code>. Copy the raw page using <kbd className="bg-slate-950 px-1 py-0.5 rounded text-[10px] border border-slate-850">Ctrl+A</kbd> and <kbd className="bg-slate-950 px-1 py-0.5 rounded text-[10px] border border-slate-850">Ctrl+C</kbd>.
               </p>
             </div>
 
@@ -465,7 +411,7 @@ export default function PostsPage() {
             <div className="flex flex-col gap-3 h-full">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <span className="w-5 h-5 rounded bg-purple-500/10 text-purple-400 text-[10px] font-bold flex items-center justify-center font-mono border border-purple-500/20">02</span>
+                  <span className="w-5 h-5 rounded bg-orange-500/10 text-orange-400 text-[10px] font-bold flex items-center justify-center font-mono border border-orange-500/20">02</span>
                   <h3 className="font-bold text-xs uppercase tracking-wider text-slate-200 font-mono">Process JSON</h3>
                 </div>
                 {rawJson.trim() && (
@@ -501,13 +447,13 @@ export default function PostsPage() {
                   Processing...
                 </>
               ) : (
-                "Compile & Display Trends"
+                "Compile & Display Results"
               )}
             </button>
           </form>
         </section>
 
-        {/* Error alert Banner (Crisp layout, sharp borders) */}
+        {/* Error alert Banner */}
         {error && (
           <div className="animate-fade-in mb-8 bg-red-950/20 border border-red-900/60 rounded-xl p-4 flex gap-3 text-red-300 font-mono">
             <svg className="w-5 h-5 flex-shrink-0 text-red-500" fill="currentColor" viewBox="0 0 20 20">
@@ -520,15 +466,15 @@ export default function PostsPage() {
           </div>
         )}
 
-        {/* Metadata Details Row + Sharp CSV Downloader */}
+        {/* Metadata Details Row + CSV Downloader */}
         {posts && (
           <div className="animate-fade-in flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8 bg-slate-900/40 border border-slate-900 rounded-xl px-5 py-4 text-xs font-mono">
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-slate-400">
-              <span>SUBREDDIT: <strong className="text-slate-200">r/{subreddit}</strong></span>
+              <span>KEYWORD: <strong className="text-slate-200">"{cleanKeyword}"</strong></span>
               <span className="w-1 h-1 rounded-full bg-slate-800" />
-              <span>SORT: <strong className="text-slate-200">{sort.toUpperCase()}</strong></span>
+              <span>SORT: <strong className="text-slate-200">{sort ? sort.toUpperCase() : "DEFAULT"}</strong></span>
               <span className="w-1 h-1 rounded-full bg-slate-800" />
-              <span>TIMEFRAME: <strong className="text-slate-200">{timeframe === "6months" ? "LAST 6 MONTHS" : timeframe.toUpperCase()}</strong></span>
+              <span>TIMEFRAME: <strong className="text-slate-200">{timeframe ? timeframe.toUpperCase() : "DEFAULT"}</strong></span>
               <span className="w-1 h-1 rounded-full bg-slate-800" />
               <span>POSTS: <strong className="text-slate-200">{totalPosts}</strong></span>
             </div>
@@ -545,7 +491,7 @@ export default function PostsPage() {
           </div>
         )}
 
-        {/* Post Cards Grid (Responsive, sharp grids with 1px slate-900 borders) */}
+        {/* Post Cards Grid */}
         {!isPending && posts && (
           <div className="animate-slide-up grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {posts.map((post) => (
@@ -556,8 +502,8 @@ export default function PostsPage() {
                 <div>
                   {/* Card Header Metadata */}
                   <div className="flex items-center justify-between gap-2 mb-3.5 text-[10px] font-mono uppercase tracking-wider text-slate-500">
-                    <span className="font-semibold text-slate-400 truncate max-w-[140px]">
-                      u/{post.author}
+                    <span className="font-semibold text-purple-400 truncate max-w-[140px]">
+                      r/{post.subreddit}
                     </span>
                     <span className="flex items-center gap-1.5 flex-shrink-0">
                       {getRelativeTime(post.posted_at)}
@@ -565,7 +511,7 @@ export default function PostsPage() {
                   </div>
 
                   {/* Post Title */}
-                  <h3 className="font-bold text-sm leading-snug text-slate-200 group-hover:text-slate-100 transition-colors mb-4 line-clamp-3">
+                  <h3 className="font-bold text-sm leading-snug text-slate-200 group-hover:text-slate-100 transition-colors mb-2 line-clamp-3">
                     <a
                       href={post.url}
                       target="_blank"
@@ -575,6 +521,8 @@ export default function PostsPage() {
                       {post.title}
                     </a>
                   </h3>
+
+                  <p className="text-[10px] text-slate-500 font-mono mb-4">u/{post.author}</p>
                 </div>
 
                 {/* Media Section: Thumbnail with NSFW blur treatments */}
@@ -589,7 +537,6 @@ export default function PostsPage() {
                       }`}
                     />
 
-                    {/* NSFW Shield Mask Overlay (Sharp lines, warning colors) */}
                     {post.nsfw && !revealedNsfw[post.id] && (
                       <div className="absolute inset-0 bg-red-950/40 backdrop-blur-[1px] flex flex-col items-center justify-center p-3 text-center">
                         <span className="bg-red-700 text-white font-bold text-[9px] tracking-widest uppercase px-2 py-0.5 rounded mb-2 border border-red-500/30">
@@ -605,7 +552,6 @@ export default function PostsPage() {
                       </div>
                     )}
 
-                    {/* Revealed NSFW button to re-hide */}
                     {post.nsfw && revealedNsfw[post.id] && (
                       <button
                         type="button"
@@ -618,10 +564,9 @@ export default function PostsPage() {
                   </div>
                 )}
 
-                {/* Card Footer Engagement (Monospaced metrics) */}
+                {/* Card Footer Engagement */}
                 <div className="flex items-center justify-between pt-4 border-t border-slate-900/60 text-[11px] font-mono text-slate-500 mt-auto">
                   <div className="flex gap-4 items-center">
-                    {/* Upvote Badge */}
                     <span className="flex items-center gap-1.5 font-bold hover:text-orange-400 transition-colors">
                       <svg className="w-3.5 h-3.5 text-orange-500" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clipRule="evenodd" />
@@ -629,7 +574,6 @@ export default function PostsPage() {
                       {formatNumber(post.upvotes)}
                     </span>
 
-                    {/* Comments Badge */}
                     <span className="flex items-center gap-1.5 font-bold hover:text-purple-400 transition-colors">
                       <svg className="w-3.5 h-3.5 text-purple-500" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clipRule="evenodd" />
@@ -828,7 +772,7 @@ export default function PostsPage() {
           </section>
         )}
 
-        {/* Empty Search Landing Page State */}
+        {/* Empty Landing State */}
         {!isPending && !posts && (
           <div className="text-center py-20 bg-slate-900/[0.05] border border-dashed border-slate-900 rounded-xl p-8 max-w-xl mx-auto flex flex-col items-center">
             <div className="w-12 h-12 rounded bg-slate-900 border border-slate-850 flex items-center justify-center text-slate-500 mb-5">
@@ -836,9 +780,9 @@ export default function PostsPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
             </div>
-            <h3 className="font-bold text-sm text-slate-300 uppercase tracking-wider font-mono">Discover Subreddit Trends</h3>
+            <h3 className="font-bold text-sm text-slate-300 uppercase tracking-wider font-mono">Search Reddit By Keyword</h3>
             <p className="text-xs text-slate-500 mt-3 max-w-md leading-relaxed font-mono">
-              Fill in the subreddit parameters in the toolbar above, click "Open Reddit Feed" to retrieve the raw JSON data, and paste it to inspect clean engagement reports.
+              Enter a keyword above, click "Open Reddit Feed" to retrieve the raw JSON data, and paste it to inspect matching posts across all of Reddit.
             </p>
           </div>
         )}

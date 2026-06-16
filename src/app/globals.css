@@ -89,15 +89,11 @@
 /* HTML Base styles */
 html {
   scroll-behavior: smooth;
+  color-scheme: dark;
 }
 
 body {
-  background-color: var(--color-background-light);
-  color: var(--color-text-light);
-  font-family: var(--font-sans);
-}
-
-body.dark {
   background-color: var(--color-background-dark);
   color: var(--color-text-dark);
+  font-family: var(--font-sans);
 }
