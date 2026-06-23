@@ -6,17 +6,18 @@ let cookiesReady = false;
 async function getBrowser() {
   if (browserInstance) return browserInstance;
 
-  const puppeteer = (await import("puppeteer")).default;
-
   const browserlessToken = process.env.BROWSERLESS_TOKEN;
 
   if (browserlessToken) {
-    // Production (Netlify): connect to remote Browserless.io Chrome instance
-    browserInstance = await puppeteer.connect({
+    // Production (Netlify): use puppeteer-core (no local Chrome needed)
+    // to connect to remote Browserless.io Chrome instance
+    const puppeteerCore = (await import("puppeteer-core")).default;
+    browserInstance = await puppeteerCore.connect({
       browserWSEndpoint: `wss://chrome.browserless.io?token=${browserlessToken}`,
     });
   } else {
-    // Local dev: launch Chrome locally
+    // Local dev: use full puppeteer (has its own Chrome)
+    const puppeteer = (await import("puppeteer")).default;
     browserInstance = await puppeteer.launch({
       headless: true,
       args: [
