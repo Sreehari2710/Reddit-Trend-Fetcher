@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
   } catch (error: any) {
     console.error("Reddit posts fetch error:", error.message);
     return Response.json(
-      { success: false, message: "Failed to fetch posts from Reddit. Please try again." },
+      { success: false, message: error.message || "Unknown error" },
       { status: 500 }
     );
   }
