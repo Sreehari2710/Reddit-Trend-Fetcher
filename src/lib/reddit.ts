@@ -18,7 +18,7 @@ async function getBrowser() {
   } else {
     // Local dev: launch Chrome locally
     browserInstance = await puppeteer.launch({
-      headless: "new",
+      headless: true,
       args: [
         "--no-sandbox",
         "--disable-setuid-sandbox",
