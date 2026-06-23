@@ -8,15 +8,25 @@ async function getBrowser() {
 
   const puppeteer = (await import("puppeteer")).default;
 
-  browserInstance = await puppeteer.launch({
-    headless: "new",
-    args: [
-      "--no-sandbox",
-      "--disable-setuid-sandbox",
-      "--disable-blink-features=AutomationControlled",
-      "--window-size=1920,1080",
-    ],
-  });
+  const browserlessToken = process.env.BROWSERLESS_TOKEN;
+
+  if (browserlessToken) {
+    // Production (Netlify): connect to remote Browserless.io Chrome instance
+    browserInstance = await puppeteer.connect({
+      browserWSEndpoint: `wss://chrome.browserless.io?token=${browserlessToken}`,
+    });
+  } else {
+    // Local dev: launch Chrome locally
+    browserInstance = await puppeteer.launch({
+      headless: "new",
+      args: [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--disable-blink-features=AutomationControlled",
+        "--window-size=1920,1080",
+      ],
+    });
+  }
 
   return browserInstance;
 }
