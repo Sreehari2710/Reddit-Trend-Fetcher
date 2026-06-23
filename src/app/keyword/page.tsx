@@ -29,10 +29,12 @@ export default function KeywordSearchPage() {
   const [limit, setLimit] = useState("");
 
   const [rawJson, setRawJson] = useState("");
+  const [showManualMode, setShowManualMode] = useState(false);
   const [posts, setPosts] = useState<KeywordPost[] | null>(null);
   const [totalPosts, setTotalPosts] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
+  const [isFetching, setIsFetching] = useState(false);
 
   const [revealedNsfw, setRevealedNsfw] = useState<Record<string, boolean>>({});
   const toggleNsfwReveal = (id: string) => {
@@ -171,6 +173,79 @@ export default function KeywordSearchPage() {
     return `https://www.reddit.com/search.json?${params.toString()}`;
   })();
 
+  // Shared mapping: takes raw Reddit Listing JSON and returns KeywordPost[]
+  const parseRedditListing = (rawData: any): KeywordPost[] => {
+    if (!rawData || rawData.kind !== "Listing" || !rawData.data || !Array.isArray(rawData.data.children)) {
+      throw new Error("Invalid structure. The response doesn't look like a complete Reddit JSON Listing feed.");
+    }
+
+    const postsLimit = limit ? parseInt(limit, 10) : rawData.data.children.length;
+
+    return rawData.data.children
+      .filter((child: any) => child.kind === "t3")
+      .slice(0, postsLimit)
+      .map((child: any) => {
+        const data = child.data || {};
+
+        const rawThumbnail = data.thumbnail;
+        const cleanThumbnail = cleanRedditUrl(rawThumbnail);
+
+        const permalink = typeof data.permalink === "string" ? data.permalink : "";
+        const isSafePermalink = /^\/[a-zA-Z0-9_]/.test(permalink) && !permalink.includes("//");
+        const threadUrl = isSafePermalink ? `https://www.reddit.com${permalink}` : "https://www.reddit.com";
+
+        return {
+          id: data.id || Math.random().toString(36).substring(7),
+          title: data.title || "Untitled",
+          subreddit: data.subreddit || "unknown",
+          author: data.author || "anonymous",
+          upvotes: typeof data.score === "number" ? data.score : (data.ups || 0),
+          comments: typeof data.num_comments === "number" ? data.num_comments : 0,
+          posted_at: data.created_utc ? new Date(data.created_utc * 1000).toISOString() : new Date().toISOString(),
+          thumbnail: cleanThumbnail,
+          url: threadUrl,
+          nsfw: !!data.over_18,
+          selftext: data.selftext || "",
+        };
+      });
+  };
+
+  // Auto-fetch: calls server API route which uses headless browser to get Reddit data
+  const handleAutoFetch = async () => {
+    if (!cleanKeyword) {
+      setError("Please enter a keyword to search first.");
+      return;
+    }
+
+    setError(null);
+    setIsFetching(true);
+
+    try {
+      const params = new URLSearchParams();
+      params.set("q", cleanKeyword);
+      if (sort) params.set("sort", sort);
+      if (timeframe) params.set("t", timeframe);
+      if (limit) params.set("limit", limit);
+
+      const response = await fetch(`/api/reddit/search?${params.toString()}`);
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        throw new Error(result.message || "Failed to search Reddit.");
+      }
+
+      const mappedPosts = parseRedditListing(result.data);
+      setPosts(mappedPosts);
+      setTotalPosts(mappedPosts.length);
+    } catch (err: any) {
+      console.error("Auto-fetch failed:", err);
+      setError(err.message || "Something went wrong. Try again or use manual mode.");
+    } finally {
+      setIsFetching(false);
+    }
+  };
+
+  // Manual mode: open Reddit feed in new tab (fallback)
   const handleOpenReddit = () => {
     if (!cleanKeyword) {
       setError("Please enter a keyword to search first.");
@@ -180,7 +255,7 @@ export default function KeywordSearchPage() {
     window.open(targetUrl, "_blank", "noopener,noreferrer");
   };
 
-  // Client-side JSON parsing and sanitization logic
+  // Manual mode: parse pasted JSON
   const handleParseAndDisplay = (e: React.FormEvent) => {
     e.preventDefault();
     if (!cleanKeyword) {
@@ -201,45 +276,9 @@ export default function KeywordSearchPage() {
     startTransition(async () => {
       try {
         const rawData = JSON.parse(rawJson);
-
-        if (!rawData || rawData.kind !== "Listing" || !rawData.data || !Array.isArray(rawData.data.children)) {
-          throw new Error("Invalid structure. The text doesn't look like a complete Reddit JSON Listing feed.");
-        }
-
-        const postsLimit = limit ? parseInt(limit, 10) : rawData.data.children.length;
-
-        const mappedPosts: KeywordPost[] = rawData.data.children
-          .filter((child: any) => child.kind === "t3")
-          .slice(0, postsLimit)
-          .map((child: any) => {
-            const data = child.data || {};
-
-            const rawThumbnail = data.thumbnail;
-            const cleanThumbnail = cleanRedditUrl(rawThumbnail);
-
-            const permalink = typeof data.permalink === "string" ? data.permalink : "";
-            // Secure validation to ensure permalink is relative, avoiding malicious redirections / open redirects
-            const isSafePermalink = /^\/[a-zA-Z0-9_]/.test(permalink) && !permalink.includes("//");
-            const threadUrl = isSafePermalink ? `https://www.reddit.com${permalink}` : "https://www.reddit.com";
-
-            return {
-              id: data.id || Math.random().toString(36).substring(7),
-              title: data.title || "Untitled",
-              subreddit: data.subreddit || "unknown",
-              author: data.author || "anonymous",
-              upvotes: typeof data.score === "number" ? data.score : (data.ups || 0),
-              comments: typeof data.num_comments === "number" ? data.num_comments : 0,
-              posted_at: data.created_utc ? new Date(data.created_utc * 1000).toISOString() : new Date().toISOString(),
-              thumbnail: cleanThumbnail,
-              url: threadUrl,
-              nsfw: !!data.over_18,
-              selftext: data.selftext || "",
-            };
-          });
-
+        const mappedPosts = parseRedditListing(rawData);
         setPosts(mappedPosts);
         setTotalPosts(mappedPosts.length);
-        setError(null);
         setRawJson("");
       } catch (err: any) {
         console.error("JSON Parsing failed:", err);
@@ -380,77 +419,89 @@ export default function KeywordSearchPage() {
           </div>
         </section>
 
-        {/* Action board */}
-        <section className="grid grid-cols-1 lg:grid-cols-5 gap-5 mb-8">
+        {/* Primary Action: Auto Fetch */}
+        <section className="mb-6">
+          <button
+            onClick={handleAutoFetch}
+            disabled={isFetching}
+            className="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-3.5 rounded-xl text-sm font-mono uppercase tracking-wider transition-all disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2.5 shadow-lg shadow-purple-600/10"
+          >
+            {isFetching ? (
+              <>
+                <svg className="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                </svg>
+                Searching Reddit...
+              </>
+            ) : (
+              <>
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                Search Posts
+              </>
+            )}
+          </button>
 
-          {/* Step 1: Link Retrieval */}
-          <div className="lg:col-span-2 bg-slate-900/40 border border-slate-900 rounded-xl p-5 flex flex-col justify-between">
-            <div>
-              <div className="flex items-center gap-2 mb-3.5">
-                <span className="w-5 h-5 rounded bg-purple-600/10 text-purple-400 text-[10px] font-bold flex items-center justify-center font-mono border border-purple-500/20">01</span>
-                <h3 className="font-bold text-xs uppercase tracking-wider text-slate-200 font-mono">Open Search Feed</h3>
-              </div>
-              <p className="text-xs text-slate-400 leading-relaxed mb-4">
-                Retrieve Reddit's raw JSON search results for <code className="text-slate-300 font-mono">"{cleanKeyword || "keyword"}"</code>. Copy the raw page using <kbd className="bg-slate-950 px-1 py-0.5 rounded text-[10px] border border-slate-850">Ctrl+A</kbd> and <kbd className="bg-slate-950 px-1 py-0.5 rounded text-[10px] border border-slate-850">Ctrl+C</kbd>.
-              </p>
-            </div>
-
+          {/* Manual Mode Fallback (collapsed) */}
+          <div className="mt-3 text-center">
             <button
-              onClick={handleOpenReddit}
-              className="w-full bg-slate-950 hover:bg-slate-900 border border-slate-850 text-slate-200 hover:text-white font-bold py-2.5 rounded-lg text-xs font-mono transition-all flex items-center justify-center gap-2 shadow"
+              type="button"
+              onClick={() => setShowManualMode(!showManualMode)}
+              className="text-[10px] text-slate-500 hover:text-slate-300 font-mono uppercase tracking-wider transition-colors"
             >
-              Open Reddit Feed
-              <svg className="w-3.5 h-3.5 text-slate-450" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-              </svg>
+              {showManualMode ? "[-] Hide Manual Mode" : "[+] Manual Mode (Paste JSON)"}
             </button>
           </div>
 
-          {/* Step 2: Paste and Render */}
-          <form onSubmit={handleParseAndDisplay} className="lg:col-span-3 bg-slate-900/40 border border-slate-900 rounded-xl p-5 flex flex-col justify-between">
-            <div className="flex flex-col gap-3 h-full">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <span className="w-5 h-5 rounded bg-orange-500/10 text-orange-400 text-[10px] font-bold flex items-center justify-center font-mono border border-orange-500/20">02</span>
-                  <h3 className="font-bold text-xs uppercase tracking-wider text-slate-200 font-mono">Process JSON</h3>
+          {showManualMode && (
+            <div className="mt-4 grid grid-cols-1 lg:grid-cols-5 gap-5">
+              <div className="lg:col-span-2 bg-slate-900/40 border border-slate-900 rounded-xl p-5 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center gap-2 mb-3.5">
+                    <span className="w-5 h-5 rounded bg-purple-600/10 text-purple-400 text-[10px] font-bold flex items-center justify-center font-mono border border-purple-500/20">01</span>
+                    <h3 className="font-bold text-xs uppercase tracking-wider text-slate-200 font-mono">Open Search Feed</h3>
+                  </div>
+                  <p className="text-xs text-slate-400 leading-relaxed mb-4">
+                    Open Reddit's search feed for <code className="text-slate-300 font-mono">"{cleanKeyword || "keyword"}"</code>, copy the page and paste below.
+                  </p>
                 </div>
-                {rawJson.trim() && (
-                  <button
-                    type="button"
-                    onClick={() => setRawJson("")}
-                    className="text-[10px] text-slate-500 hover:text-slate-300 font-mono uppercase tracking-wider"
-                  >
-                    [Clear]
-                  </button>
-                )}
+                <button
+                  onClick={handleOpenReddit}
+                  className="w-full bg-slate-950 hover:bg-slate-900 border border-slate-850 text-slate-200 hover:text-white font-bold py-2.5 rounded-lg text-xs font-mono transition-all flex items-center justify-center gap-2 shadow"
+                >
+                  Open Reddit Feed
+                  <svg className="w-3.5 h-3.5 text-slate-450" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                </button>
               </div>
 
-              <textarea
-                value={rawJson}
-                onChange={(e) => setRawJson(e.target.value)}
-                placeholder="Paste JSON Listing (starts with { 'kind': 'Listing' ... })"
-                className="w-full flex-1 min-h-[90px] bg-slate-950 border border-slate-850 rounded-lg p-3 text-[11px] text-slate-300 focus:outline-none focus:border-slate-700 transition-all font-mono resize-none placeholder-slate-700"
-              />
+              <form onSubmit={handleParseAndDisplay} className="lg:col-span-3 bg-slate-900/40 border border-slate-900 rounded-xl p-5 flex flex-col justify-between">
+                <div className="flex flex-col gap-3 h-full">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <span className="w-5 h-5 rounded bg-orange-500/10 text-orange-400 text-[10px] font-bold flex items-center justify-center font-mono border border-orange-500/20">02</span>
+                      <h3 className="font-bold text-xs uppercase tracking-wider text-slate-200 font-mono">Process JSON</h3>
+                    </div>
+                    {rawJson.trim() && (
+                      <button type="button" onClick={() => setRawJson("")} className="text-[10px] text-slate-500 hover:text-slate-300 font-mono uppercase tracking-wider">[Clear]</button>
+                    )}
+                  </div>
+                  <textarea
+                    value={rawJson}
+                    onChange={(e) => setRawJson(e.target.value)}
+                    placeholder="Paste JSON Listing (starts with { 'kind': 'Listing' ... })"
+                    className="w-full flex-1 min-h-[90px] bg-slate-950 border border-slate-850 rounded-lg p-3 text-[11px] text-slate-300 focus:outline-none focus:border-slate-700 transition-all font-mono resize-none placeholder-slate-700"
+                  />
+                </div>
+                <button type="submit" disabled={isPending} className="w-full bg-slate-100 hover:bg-white text-slate-950 font-bold py-2.5 rounded-lg text-xs font-mono uppercase tracking-wider transition-all disabled:opacity-50 flex items-center justify-center gap-2 mt-4 shadow">
+                  {isPending ? "Processing..." : "Compile & Display Results"}
+                </button>
+              </form>
             </div>
-
-            <button
-              type="submit"
-              disabled={isPending}
-              className="w-full bg-slate-100 hover:bg-white text-slate-950 font-bold py-2.5 rounded-lg text-xs font-mono uppercase tracking-wider transition-all disabled:opacity-50 flex items-center justify-center gap-2 mt-4 shadow"
-            >
-              {isPending ? (
-                <>
-                  <svg className="animate-spin h-3.5 w-3.5 text-slate-950" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                  </svg>
-                  Processing...
-                </>
-              ) : (
-                "Compile & Display Results"
-              )}
-            </button>
-          </form>
+          )}
         </section>
 
         {/* Error alert Banner */}

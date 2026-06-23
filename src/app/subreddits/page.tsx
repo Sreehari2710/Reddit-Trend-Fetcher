@@ -11,9 +11,11 @@ export default function SubredditsPage() {
   const [relatedSubName, setRelatedSubName] = useState("");
   const [relatedCount, setRelatedCount] = useState("");
   const [relatedRawJson, setRelatedRawJson] = useState("");
+  const [showManualMode, setShowManualMode] = useState(false);
   const [relatedSubreddits, setRelatedSubreddits] = useState<RelatedSubreddit[] | null>(null);
   const [relatedError, setRelatedError] = useState<string | null>(null);
   const [isParsingRelated, startRelatedTransition] = useTransition();
+  const [isFetching, setIsFetching] = useState(false);
 
   // Clean and sanitize the related-subreddits search term
   const getCleanRelatedSub = () => {
@@ -40,19 +42,6 @@ export default function SubredditsPage() {
     ? `https://www.reddit.com/subreddits/search.json?q=${encodeURIComponent(cleanRelatedSub)}&limit=${parseInt(relatedCount, 10) + 1}`
     : "";
 
-  const handleOpenRelatedFeed = () => {
-    if (!relatedSubName.trim()) {
-      setRelatedError("Please enter a valid subreddit name first.");
-      return;
-    }
-    if (!relatedCount) {
-      setRelatedError("Please select a subreddit count first.");
-      return;
-    }
-    setRelatedError(null);
-    window.open(relatedTargetUrl, "_blank", "noopener,noreferrer");
-  };
-
   // Sort already-parsed results by subscribers (real, verifiable data from every response).
   const sortRelatedSubreddits = (list: RelatedSubreddit[]): RelatedSubreddit[] => {
     const sorted = [...list];
@@ -60,17 +49,75 @@ export default function SubredditsPage() {
     return sorted;
   };
 
-  // Client-side parsing of pasted subreddits/search.json payload
+  // Shared mapping: takes raw Reddit Listing JSON and returns RelatedSubreddit[]
+  const parseSubredditListing = (rawData: any): RelatedSubreddit[] => {
+    if (!rawData || rawData.kind !== "Listing" || !rawData.data || !Array.isArray(rawData.data.children)) {
+      throw new Error("Invalid structure. The response doesn't look like a complete Reddit JSON Listing feed.");
+    }
+
+    const countLimit = parseInt(relatedCount, 10);
+
+    return rawData.data.children
+      .map((child: any) => {
+        const data = child.data || {};
+        return {
+          name: data.display_name || "",
+          subscribers: typeof data.subscribers === "number" ? data.subscribers : 0,
+          createdAt: data.created_utc ? new Date(data.created_utc * 1000).toISOString() : new Date().toISOString(),
+          description: data.public_description || "",
+          over18: !!data.over_18,
+          icon: data.icon_img || data.community_icon || null,
+          url: data.url ? `https://www.reddit.com${data.url}` : `https://www.reddit.com/r/${data.display_name || ""}`,
+        };
+      })
+      .filter((entry: RelatedSubreddit) => entry.name && entry.name.toLowerCase() !== cleanRelatedSub)
+      .slice(0, countLimit);
+  };
+
+  const validateInputs = (): boolean => {
+    if (!relatedSubName.trim()) { setRelatedError("Please enter a valid subreddit name first."); return false; }
+    if (!relatedCount) { setRelatedError("Please select a subreddit count first."); return false; }
+    return true;
+  };
+
+  // Auto-fetch: calls server API route which uses headless browser to get Reddit data
+  const handleAutoFetch = async () => {
+    if (!validateInputs()) return;
+
+    setRelatedError(null);
+    setIsFetching(true);
+
+    try {
+      const response = await fetch(
+        `/api/reddit/subreddits?q=${encodeURIComponent(cleanRelatedSub)}&limit=${parseInt(relatedCount, 10) + 1}`
+      );
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        throw new Error(result.message || "Failed to search subreddits.");
+      }
+
+      const mapped = parseSubredditListing(result.data);
+      setRelatedSubreddits(sortRelatedSubreddits(mapped));
+    } catch (err: any) {
+      console.error("Auto-fetch failed:", err);
+      setRelatedError(err.message || "Something went wrong. Try again or use manual mode.");
+    } finally {
+      setIsFetching(false);
+    }
+  };
+
+  // Manual mode: open Reddit feed in new tab (fallback)
+  const handleOpenRelatedFeed = () => {
+    if (!validateInputs()) return;
+    setRelatedError(null);
+    window.open(relatedTargetUrl, "_blank", "noopener,noreferrer");
+  };
+
+  // Manual mode: parse pasted JSON
   const handleParseRelated = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!relatedSubName.trim()) {
-      setRelatedError("Please enter a valid subreddit name first.");
-      return;
-    }
-    if (!relatedCount) {
-      setRelatedError("Please select a subreddit count first.");
-      return;
-    }
+    if (!validateInputs()) return;
     if (!relatedRawJson.trim()) {
       setRelatedError("Please paste the copied Reddit search JSON payload into the text area below.");
       return;
@@ -85,29 +132,7 @@ export default function SubredditsPage() {
     startRelatedTransition(async () => {
       try {
         const rawData = JSON.parse(relatedRawJson);
-
-        if (!rawData || rawData.kind !== "Listing" || !rawData.data || !Array.isArray(rawData.data.children)) {
-          throw new Error("Invalid structure. The text doesn't look like a complete Reddit JSON Listing feed.");
-        }
-
-        const countLimit = parseInt(relatedCount, 10);
-
-        const mapped: RelatedSubreddit[] = rawData.data.children
-          .map((child: any) => {
-            const data = child.data || {};
-            return {
-              name: data.display_name || "",
-              subscribers: typeof data.subscribers === "number" ? data.subscribers : 0,
-              createdAt: data.created_utc ? new Date(data.created_utc * 1000).toISOString() : new Date().toISOString(),
-              description: data.public_description || "",
-              over18: !!data.over_18,
-              icon: data.icon_img || data.community_icon || null,
-              url: data.url ? `https://www.reddit.com${data.url}` : `https://www.reddit.com/r/${data.display_name || ""}`,
-            };
-          })
-          .filter((entry: RelatedSubreddit) => entry.name && entry.name.toLowerCase() !== cleanRelatedSub)
-          .slice(0, countLimit);
-
+        const mapped = parseSubredditListing(rawData);
         setRelatedSubreddits(sortRelatedSubreddits(mapped));
         setRelatedError(null);
         setRelatedRawJson("");
@@ -188,52 +213,77 @@ export default function SubredditsPage() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-5">
-            {/* Step A: Open search feed */}
-            <div className="lg:col-span-2 flex flex-col justify-between">
-              <p className="text-xs text-slate-400 leading-relaxed mb-4">
-                Open Reddit's subreddit search feed for <code className="text-slate-300 font-mono">r/{cleanRelatedSub || "subreddit"}</code>, then copy the page (<kbd className="bg-slate-950 px-1 py-0.5 rounded text-[10px] border border-slate-850">Ctrl+A</kbd>, <kbd className="bg-slate-950 px-1 py-0.5 rounded text-[10px] border border-slate-850">Ctrl+C</kbd>) and paste it below.
-              </p>
-              <button
-                onClick={handleOpenRelatedFeed}
-                className="w-full bg-slate-950 hover:bg-slate-900 border border-slate-850 text-slate-200 hover:text-white font-bold py-2.5 rounded-lg text-xs font-mono transition-all flex items-center justify-center gap-2 shadow"
-              >
-                Open Related Feed
-                <svg className="w-3.5 h-3.5 text-slate-450" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          {/* Primary Action: Auto Fetch */}
+          <button
+            onClick={handleAutoFetch}
+            disabled={isFetching}
+            className="w-full bg-sky-600 hover:bg-sky-500 text-white font-bold py-3.5 rounded-xl text-sm font-mono uppercase tracking-wider transition-all disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2.5 shadow-lg shadow-sky-600/10 mb-4"
+          >
+            {isFetching ? (
+              <>
+                <svg className="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                 </svg>
-              </button>
-            </div>
+                Searching Subreddits...
+              </>
+            ) : (
+              <>
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                Find Related Subreddits
+              </>
+            )}
+          </button>
 
-            {/* Step B: Paste and parse */}
-            <form onSubmit={handleParseRelated} className="lg:col-span-3 flex flex-col justify-between gap-3">
-              <div className="flex items-center justify-between">
-                <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500 font-mono">Paste Search JSON</span>
-                {relatedRawJson.trim() && (
-                  <button
-                    type="button"
-                    onClick={() => setRelatedRawJson("")}
-                    className="text-[10px] text-slate-500 hover:text-slate-300 font-mono uppercase tracking-wider"
-                  >
-                    [Clear]
-                  </button>
-                )}
-              </div>
-              <textarea
-                value={relatedRawJson}
-                onChange={(e) => setRelatedRawJson(e.target.value)}
-                placeholder="Paste JSON Listing (starts with { 'kind': 'Listing' ... })"
-                className="w-full min-h-[70px] bg-slate-950 border border-slate-850 rounded-lg p-3 text-[11px] text-slate-300 focus:outline-none focus:border-slate-700 transition-all font-mono resize-none placeholder-slate-700"
-              />
-              <button
-                type="submit"
-                disabled={isParsingRelated}
-                className="w-full bg-slate-100 hover:bg-white text-slate-950 font-bold py-2.5 rounded-lg text-xs font-mono uppercase tracking-wider transition-all disabled:opacity-50 flex items-center justify-center gap-2 shadow"
-              >
-                {isParsingRelated ? "Processing..." : "Find Related Subreddits"}
-              </button>
-            </form>
+          {/* Manual Mode Fallback (collapsed) */}
+          <div className="text-center mb-4">
+            <button
+              type="button"
+              onClick={() => setShowManualMode(!showManualMode)}
+              className="text-[10px] text-slate-500 hover:text-slate-300 font-mono uppercase tracking-wider transition-colors"
+            >
+              {showManualMode ? "[-] Hide Manual Mode" : "[+] Manual Mode (Paste JSON)"}
+            </button>
           </div>
+
+          {showManualMode && (
+            <div className="grid grid-cols-1 lg:grid-cols-5 gap-5 mb-4">
+              <div className="lg:col-span-2 flex flex-col justify-between">
+                <p className="text-xs text-slate-400 leading-relaxed mb-4">
+                  Open Reddit's search feed for <code className="text-slate-300 font-mono">r/{cleanRelatedSub || "subreddit"}</code>, copy the page and paste below.
+                </p>
+                <button
+                  onClick={handleOpenRelatedFeed}
+                  className="w-full bg-slate-950 hover:bg-slate-900 border border-slate-850 text-slate-200 hover:text-white font-bold py-2.5 rounded-lg text-xs font-mono transition-all flex items-center justify-center gap-2 shadow"
+                >
+                  Open Related Feed
+                  <svg className="w-3.5 h-3.5 text-slate-450" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                </button>
+              </div>
+
+              <form onSubmit={handleParseRelated} className="lg:col-span-3 flex flex-col justify-between gap-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500 font-mono">Paste Search JSON</span>
+                  {relatedRawJson.trim() && (
+                    <button type="button" onClick={() => setRelatedRawJson("")} className="text-[10px] text-slate-500 hover:text-slate-300 font-mono uppercase tracking-wider">[Clear]</button>
+                  )}
+                </div>
+                <textarea
+                  value={relatedRawJson}
+                  onChange={(e) => setRelatedRawJson(e.target.value)}
+                  placeholder="Paste JSON Listing (starts with { 'kind': 'Listing' ... })"
+                  className="w-full min-h-[70px] bg-slate-950 border border-slate-850 rounded-lg p-3 text-[11px] text-slate-300 focus:outline-none focus:border-slate-700 transition-all font-mono resize-none placeholder-slate-700"
+                />
+                <button type="submit" disabled={isParsingRelated} className="w-full bg-slate-100 hover:bg-white text-slate-950 font-bold py-2.5 rounded-lg text-xs font-mono uppercase tracking-wider transition-all disabled:opacity-50 flex items-center justify-center gap-2 shadow">
+                  {isParsingRelated ? "Processing..." : "Find Related Subreddits"}
+                </button>
+              </form>
+            </div>
+          )}
 
           {relatedError && (
             <div className="animate-fade-in mt-5 bg-red-950/20 border border-red-900/60 rounded-xl p-4 flex gap-3 text-red-300 font-mono">
